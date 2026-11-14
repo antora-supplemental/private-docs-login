@@ -1,5 +1,5 @@
 = Environment variables
-:description: Names for Antora Private Docs Site. Values are never stored in git.
+:description: Names for Antora Private Docs Login. Values are never stored in git.
 
 Set these in the process environment or a gitignored file.
 Empty names in `.env.example` match this table.
@@ -27,7 +27,7 @@ Empty names in `.env.example` match this table.
 | Generate locally with `openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048`. Do not commit the file.
 
 | `ANTORA_PRIVATE_DOCS_GITHUB_APP_ID`
-| Numeric id of the GitHub App named Antora Private Docs Site.
+| Numeric id of the GitHub App named Antora Private Docs Login.
 | Yes, when the `github` block is present
 | GitHub sign-in is not available.
 | GitHub organization settings, GitHub Apps, after approving the manifest. The setup command writes it under `var/` and does not print the client secret.
@@ -45,7 +45,7 @@ Empty names in `.env.example` match this table.
 | Shown once at manifest approval. Stored in gitignored `var/github-app.json`.
 
 | `ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_ID`
-| Application ID of the GitLab application named Antora Private Docs Site.
+| Application ID of the GitLab application named Antora Private Docs Login.
 | Yes, when a `gitlab` instance block is present
 | That GitLab host is not available for sign-in.
 | GitLab group Settings, Applications. The `gitlab-setup` command prints the URL.

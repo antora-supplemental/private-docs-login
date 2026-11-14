@@ -25,7 +25,7 @@ export function createIssuer(options) {
     }
     if (request.method === "GET" && (url.pathname === "/jwks" || url.pathname === "/github/setup")) {
       if (url.pathname === "/jwks") return json({ keys: [options.publicJwk] })
-      return text("Antora Private Docs Site is installed. Members of that organization can sign in.")
+      return text("Antora Private Docs Login is installed. Members of that organization can sign in.")
     }
     if (request.method === "GET" && url.pathname === "/authorize") return authorize(url)
     if (request.method === "GET" && (url.pathname === "/github/callback" || url.pathname === "/gitlab/callback")) {

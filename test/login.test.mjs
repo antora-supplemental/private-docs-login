@@ -179,7 +179,7 @@ test("a user with zero installations is refused", async () => {
   const back = await signIn(app, { forge: "github", callbackPath: "/github/callback" })
   assert.equal(back.status, 403)
   const html = await back.text()
-  assert.match(html, /Antora Private Docs Site/)
+  assert.match(html, /Antora Private Docs Login/)
   assert.match(html, /install/i)
   assert.equal(back.headers.get("location"), null)
 })
@@ -265,7 +265,7 @@ test("GitHub manifest names the app and asks only for member read", () => {
     issuer: "https://login.example.com",
     setupOrigin: "http://127.0.0.1:8765",
   })
-  assert.equal(manifest.name, "Antora Private Docs Site")
+  assert.equal(manifest.name, "Antora Private Docs Login")
   assert.deepEqual(manifest.default_permissions, { members: "read" })
   assert.equal(JSON.stringify(manifest).includes("contents"), false)
   assert.equal(JSON.stringify(manifest).includes("email"), false)
@@ -276,7 +276,7 @@ test("GitHub manifest names the app and asks only for member read", () => {
     manifest,
   })
   assert.match(html, /organizations\/antora-supplemental\/settings\/apps\/new/)
-  assert.match(html, /Antora Private Docs Site/)
+  assert.match(html, /Antora Private Docs Login/)
 })
 
 test("GitLab setup names the app, the scope, and the opt-in user", async () => {
@@ -290,7 +290,7 @@ test("GitLab setup names the app, the scope, and the opt-in user", async () => {
     fetchImpl: async () => new Response("missing", { status: 404 }),
   })
   assert.match(text, /https:\/\/gitlab.example.com\/groups\/antora-supplemental\/-\/settings\/applications/)
-  assert.match(text, /Name: Antora Private Docs Site/)
+  assert.match(text, /Name: Antora Private Docs Login/)
   assert.match(text, /read_api/)
   assert.match(text, /antora-private-docs/)
   assert.match(text, /No GitLab group named antora-supplemental/)

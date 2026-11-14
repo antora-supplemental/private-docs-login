@@ -1,4 +1,4 @@
-// Antora Private Docs Site. Copy to config/issuer.sdl (gitignored) and set env names.
+// Antora Private Docs Login. Copy to config/issuer.sdl (gitignored) and set env names.
 // The listen address is where this process binds. issuer is the public URL relying parties use.
 // Neither value assumes a particular host.
 
@@ -15,7 +15,7 @@ signing-key {
   kid "antora-private-docs-1"
 }
 
-// GitHub App named Antora Private Docs Site, owned by this organization.
+// GitHub App named Antora Private Docs Login, owned by this organization.
 github {
   web "https://github.com"
   api "https://api.github.com"

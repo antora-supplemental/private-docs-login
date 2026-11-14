@@ -36,16 +36,16 @@ export function refusalPage({ forge, installUrl, optInUsername, instanceUrl }) {
   if (forge === "gitlab") {
     const name = optInUsername || "the opt-in user"
     return htmlResponse(403, "This group has not opted in", `
-<p>Antora Private Docs Site could not sign you in. You are not a member of a GitLab group that has opted in.</p>
+<p>Antora Private Docs Login could not sign you in. You are not a member of a GitLab group that has opted in.</p>
 <p>A group owner opts in by inviting the GitLab user <strong>${escapeHtml(name)}</strong> to the group. Guest access is enough. A group you belong to that has not invited that user is not included. A personal email address does not grant access.</p>
 <p>After the invite, sign in again from the documentation site.${instanceUrl ? ` The GitLab host for this login is ${escapeHtml(instanceUrl)}.` : ""}</p>`)
   }
   const link = installUrl
-    ? `<p><a href="${escapeHtml(installUrl)}">Install Antora Private Docs Site</a></p>`
+    ? `<p><a href="${escapeHtml(installUrl)}">Install Antora Private Docs Login</a></p>`
     : ""
   return htmlResponse(403, "This organization has not installed the app", `
-<p>Antora Private Docs Site could not sign you in. Your GitHub user is not a member of an organization that has installed this GitHub App.</p>
-<p>An owner of the organization installs the app named Antora Private Docs Site. After that install, sign in again. A personal email address does not grant access.</p>
+<p>Antora Private Docs Login could not sign you in. Your GitHub user is not a member of an organization that has installed this GitHub App.</p>
+<p>An owner of the organization installs the app named Antora Private Docs Login. After that install, sign in again. A personal email address does not grant access.</p>
 ${link}`)
 }
 
@@ -66,7 +66,7 @@ ${extra}
 </form>`
   }).join("\n")
   return htmlResponse(200, "Choose where to sign in", `
-<p>Antora Private Docs Site signs you in through a forge your organization has opted into.</p>
+<p>Antora Private Docs Login signs you in through a forge your organization has opted into.</p>
 <p>Choose GitHub or a GitLab host. You will come back here only if that organization or group has not opted in.</p>
 ${buttons}`)
 }

@@ -3,11 +3,17 @@
 
 == 2026-11-13
 
+=== Display name is Antora Private Docs Login
+
+* The GitHub App and the GitLab application an owner approves are named Antora Private Docs Login.
+* Detail: link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login].
+
 === OpenID Connect issuer for GitHub and GitLab
 
-* Antora Private Docs Site is one issuer. GitHub organizations install one app. GitLab groups opt in by inviting a configured user. The groups claim name and the listen address come from config.
+* Antora Private Docs Login is one issuer. GitHub organizations install one app. GitLab groups opt in by inviting a configured user. The groups claim name and the listen address come from config.
 * Detail: link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab].
 
 == History and reports
 
+* 2026-11-13, link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login]: the name an owner approves on GitHub and GitLab.
 * 2026-11-13, link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab]: what the first version checks before it issues a token.

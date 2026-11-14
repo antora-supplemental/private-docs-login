@@ -41,9 +41,9 @@ endif::[]
 
 == About
 
-Antora Private Docs Site signs private-docs readers in.
+Antora Private Docs Login signs private-docs readers in.
 The service is an OpenID Connect issuer any relying party can use.
-GitHub organizations opt in by installing the GitHub App named Antora Private Docs Site.
+GitHub organizations opt in by installing the GitHub App named Antora Private Docs Login.
 GitLab groups opt in by inviting a configured user, because GitLab does not install apps the way GitHub does.
 Cloudflare Access can be a client. It is not the required host.
 

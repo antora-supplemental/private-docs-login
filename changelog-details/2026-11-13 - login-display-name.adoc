@@ -1,0 +1,10 @@
+= 2026-11-13
+
+== Display name is Antora Private Docs Login
+
+The GitHub App manifest and the GitLab setup text use the name Antora Private Docs Login.
+
+That is the name an owner sees on the approval screen.
+The repository slug stays `private-docs-login`.
+The groups claim format and the client ids are unchanged.
+Refusal pages and the sign-in chooser use the same name.

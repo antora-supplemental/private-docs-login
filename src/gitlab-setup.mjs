@@ -17,10 +17,10 @@ export async function gitlabSetupText({ instance, fetchImpl, issuer }) {
     found = `This command could not reach ${url}. Open the settings URL after the group exists.`
   }
   return [
-    "Antora Private Docs Site on GitLab is one group-owned application. GitLab has no GitHub App installation.",
+    "Antora Private Docs Login on GitLab is one group-owned application. GitLab has no GitHub App installation.",
     found,
     `Open ${settings}`,
-    "Name: Antora Private Docs Site",
+    "Name: Antora Private Docs Login",
     `Redirect URI: ${callback}`,
     "Confidential: yes",
     "Scope: read_api",

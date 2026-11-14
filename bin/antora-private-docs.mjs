@@ -10,7 +10,7 @@ import { gitlabSetupText } from "../src/gitlab-setup.mjs"
 
 const version = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version
 
-const help = `Antora Private Docs Site is an OpenID Connect issuer for private documentation.
+const help = `Antora Private Docs Login is an OpenID Connect issuer for private documentation.
 GitHub organizations opt in by installing one GitHub App. GitLab groups opt in by inviting a configured user. The ID token lists those organizations and groups.
 
 Start the issuer in this window:
@@ -48,7 +48,7 @@ const configPath = flag(args, "--config", process.env.ANTORA_PRIVATE_DOCS_CONFIG
 if (command === "serve") {
   const started = await listenIssuer({ configPath, env: process.env })
   const address = started.server.address()
-  console.log(`This window is showing Antora Private Docs Site.`)
+  console.log(`This window is showing Antora Private Docs Login.`)
   console.log(`Listen ${started.runtime.listenHost}:${address.port}`)
   console.log(`Issuer ${started.runtime.issuer}`)
   console.log(`Groups claim ${started.runtime.groupsClaim}`)
@@ -76,7 +76,7 @@ if (command === "serve") {
   })
   console.log(`This window is showing the GitHub App setup.`)
   console.log(`Open http://${host}:${port}/`)
-  console.log("The form posts the manifest to GitHub. Approve Antora Private Docs Site there. Ctrl+C stops this process.")
+  console.log("The form posts the manifest to GitHub. Approve Antora Private Docs Login there. Ctrl+C stops this process.")
   void server
 } else if (command === "gitlab-setup") {
   const raw = readConfigFile(configPath)

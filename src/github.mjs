@@ -98,7 +98,7 @@ export function githubManifest({ issuer, setupOrigin }) {
   const root = issuer.replace(/\/$/, "")
   const setup = setupOrigin.replace(/\/$/, "")
   return {
-    name: "Antora Private Docs Site",
+    name: "Antora Private Docs Login",
     url: root,
     redirect_url: `${setup}/setup/github/callback`,
     callback_urls: [`${root}/github/callback`],

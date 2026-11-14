@@ -2,7 +2,7 @@
 
 == OpenID Connect issuer for GitHub and GitLab
 
-Antora Private Docs Site issues an ID token after a forge says the person belongs to an opted-in organization or group.
+Antora Private Docs Login issues an ID token after a forge says the person belongs to an opted-in organization or group.
 
 GitHub opt-in is an installation of the GitHub App with that name.
 The token lists organizations where that app is installed and the person is a member.

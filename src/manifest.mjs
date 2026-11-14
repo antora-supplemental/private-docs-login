@@ -8,11 +8,11 @@ export function manifestForm({ webBase, owner, manifest }) {
   const json = JSON.stringify(JSON.stringify(manifest)).replace(/</g, "\\u003c")
   return `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>Create Antora Private Docs Site</title></head>
+<head><meta charset="utf-8"><title>Create Antora Private Docs Login</title></head>
 <body>
 <main>
 <h1>Create the GitHub App</h1>
-<p>Antora Private Docs Site is one GitHub App. This page sends GitHub the manifest. You approve it in the next screen. The app is owned by ${escapeHtml(owner)}.</p>
+<p>Antora Private Docs Login is one GitHub App. This page sends GitHub the manifest. You approve it in the next screen. The app is owned by ${escapeHtml(owner)}.</p>
 <p>Leave this window open. GitHub will return here with a code, and the command will write credentials into a gitignored folder.</p>
 <form method="post" action="${escapeHtml(action)}">
 <input type="hidden" name="manifest" id="manifest">
@@ -74,8 +74,8 @@ export async function exchangeManifestCode(fetchImpl, code) {
   })
   if (!res.ok) throw new Error(`GitHub manifest exchange responded ${res.status}`)
   const body = await res.json()
-  if (body.name !== "Antora Private Docs Site") {
-    throw new Error("GitHub returned an app whose name is not Antora Private Docs Site")
+  if (body.name !== "Antora Private Docs Login") {
+    throw new Error("GitHub returned an app whose name is not Antora Private Docs Login")
   }
   return body
 }

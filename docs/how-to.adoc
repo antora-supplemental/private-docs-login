@@ -1,6 +1,6 @@
-= Run Antora Private Docs Site
+= Run Antora Private Docs Login
 
-Antora Private Docs Site is an OpenID Connect issuer.
+Antora Private Docs Login is an OpenID Connect issuer.
 GitHub organizations opt in by installing one GitHub App.
 GitLab groups opt in by inviting one configured user.
 The listen address and the public issuer URL come from config.
@@ -28,7 +28,7 @@ node bin/antora-private-docs.mjs github-manifest --config config/issuer.sdl
 
 Open `http://127.0.0.1:8765/`.
 The form posts the manifest to `https://github.com/organizations/antora-supplemental/settings/apps/new`.
-The name on that screen is Antora Private Docs Site.
+The name on that screen is Antora Private Docs Login.
 Approve it there.
 Credentials land in gitignored `var/`.
 The command does not print the client secret or the private key.
@@ -44,7 +44,7 @@ node bin/antora-private-docs.mjs gitlab-setup --config config/issuer.sdl
 ----
 
 GitLab has no GitHub App installation.
-The application is group-owned, named Antora Private Docs Site, scope `read_api`.
+The application is group-owned, named Antora Private Docs Login, scope `read_api`.
 The instance URL is the `gitlab.instance.url` value.
 On gitlab.com the group `antora-supplemental` is not there yet.
 After it exists, the settings page is `https://gitlab.com/groups/antora-supplemental/-/settings/applications`.
