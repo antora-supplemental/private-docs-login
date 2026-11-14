@@ -1,0 +1,13 @@
+= Changelog
+:toc:
+
+== 2026-11-13
+
+=== OpenID Connect issuer for GitHub and GitLab
+
+* Antora Private Docs Site is one issuer. GitHub organizations install one app. GitLab groups opt in by inviting a configured user. The groups claim name and the listen address come from config.
+* Detail: link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab].
+
+== History and reports
+
+* 2026-11-13, link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab]: what the first version checks before it issues a token.

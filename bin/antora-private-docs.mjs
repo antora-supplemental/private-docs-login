@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+import { readFileSync } from "node:fs"
+import { fileURLToPath } from "node:url"
+import { dirname, join } from "node:path"
+import { describeConfig, readConfigFile } from "../src/config.mjs"
+import { asList } from "../src/sdl.mjs"
+import { listenIssuer } from "../src/serve.mjs"
+import { startManifestServer, writeGithubCredentials } from "../src/manifest.mjs"
+import { gitlabSetupText } from "../src/gitlab-setup.mjs"
+
+const version = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version
+
+const help = `Antora Private Docs Site is an OpenID Connect issuer for private documentation.
+GitHub organizations opt in by installing one GitHub App. GitLab groups opt in by inviting a configured user. The ID token lists those organizations and groups.
+
+Start the issuer in this window:
+  antora-private-docs serve --config config/issuer.sdl
+  The listen line is the address. Ctrl+C stops this process.
+
+Create the GitHub App (one approval in the browser):
+  antora-private-docs github-manifest --config config/issuer.sdl
+
+Print the GitLab application steps:
+  antora-private-docs gitlab-setup --config config/issuer.sdl
+
+--version prints ${version}. Environment names are listed in docs/environment-variables.adoc.
+`
+
+function flag(args, name, fallback) {
+  const index = args.indexOf(name)
+  if (index === -1) return fallback
+  return args[index + 1]
+}
+
+const args = process.argv.slice(2)
+if (args.includes("--help") || args.includes("-h") || args.length === 0) {
+  console.log(help)
+  process.exit(0)
+}
+if (args.includes("--version") || args.includes("-v")) {
+  console.log(version)
+  process.exit(0)
+}
+
+const command = args[0]
+const configPath = flag(args, "--config", process.env.ANTORA_PRIVATE_DOCS_CONFIG || "config/issuer.sdl")
+
+if (command === "serve") {
+  const started = await listenIssuer({ configPath, env: process.env })
+  const address = started.server.address()
+  console.log(`This window is showing Antora Private Docs Site.`)
+  console.log(`Listen ${started.runtime.listenHost}:${address.port}`)
+  console.log(`Issuer ${started.runtime.issuer}`)
+  console.log(`Groups claim ${started.runtime.groupsClaim}`)
+  console.log(`Ctrl+C stops this process.`)
+} else if (command === "github-manifest") {
+  const raw = readConfigFile(configPath)
+  const described = describeConfig(raw)
+  const github = raw.github || {}
+  const host = flag(args, "--listen-host", "127.0.0.1")
+  const port = Number(flag(args, "--listen-port", "8765"))
+  const server = await startManifestServer({
+    host,
+    port,
+    webBase: github.web || "https://github.com",
+    owner: github.owner,
+    issuer: described.issuer,
+    fetchImpl: globalThis.fetch,
+    onCredentials(body) {
+      const written = writeGithubCredentials(join(dirname(fileURLToPath(import.meta.url)), "..", "var"), body)
+      console.log(`GitHub App id ${written.id}. Slug ${written.slug || "(not returned)"}.`)
+      console.log(`Wrote ${written.jsonPath}`)
+      console.log(`Wrote ${written.pemPath}`)
+      console.log("Set the GitHub env names in docs/environment-variables.adoc from that file. This command does not print the client secret or the private key.")
+    },
+  })
+  console.log(`This window is showing the GitHub App setup.`)
+  console.log(`Open http://${host}:${port}/`)
+  console.log("The form posts the manifest to GitHub. Approve Antora Private Docs Site there. Ctrl+C stops this process.")
+  void server
+} else if (command === "gitlab-setup") {
+  const raw = readConfigFile(configPath)
+  const described = describeConfig(raw)
+  const instances = asList(raw.gitlab && raw.gitlab.instance)
+  if (instances.length === 0) {
+    console.error("The config has no GitLab instance.")
+    process.exit(1)
+  }
+  for (const instance of instances) {
+    const text = await gitlabSetupText({
+      instance: {
+        instanceUrl: instance.url,
+        ownerGroup: instance["owner-group"],
+        optInUsername: instance["opt-in-username"],
+      },
+      issuer: described.issuer,
+      fetchImpl: globalThis.fetch,
+    })
+    console.log(text)
+    console.log("")
+  }
+} else {
+  console.error(help)
+  process.exit(1)
+}

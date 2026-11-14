@@ -1,0 +1,20 @@
+= 2026-11-13
+
+== OpenID Connect issuer for GitHub and GitLab
+
+Antora Private Docs Site issues an ID token after a forge says the person belongs to an opted-in organization or group.
+
+GitHub opt-in is an installation of the GitHub App with that name.
+The token lists organizations where that app is installed and the person is a member.
+A user account installation is ignored.
+Another app's installation is ignored.
+No matching organization is a refusal page.
+
+GitLab has no installation object.
+Opt-in is membership of the configured username on the group.
+A group the person belongs to, without that member, is excluded.
+No opted-in group is the same kind of refusal page.
+
+Relying parties, including a generic OpenID Connect client and a Cloudflare Access client, are entries in the SDL config.
+The redirect URI has to match the entry.
+The groups claim name is the config field `groups-claim`.

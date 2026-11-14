@@ -1,0 +1,27 @@
+{
+  "name": "@antora-supplemental/private-docs-login",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OpenID Connect issuer for private docs. GitHub organizations install one GitHub App. GitLab groups opt in by membership.",
+  "license": "MPL-2.0",
+  "author": "Ryan Johnson (https://github.com/AMDphreak)",
+  "homepage": "https://github.com/antora-supplemental/private-docs-login",
+  "bugs": {
+    "url": "https://github.com/antora-supplemental/private-docs-login/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antora-supplemental/private-docs-login.git"
+  },
+  "type": "module",
+  "bin": {
+    "antora-private-docs": "bin/antora-private-docs.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node bin/antora-private-docs.mjs serve",
+    "test": "node --test"
+  }
+}

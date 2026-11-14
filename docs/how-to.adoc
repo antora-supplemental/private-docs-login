@@ -1,0 +1,75 @@
+= Run Antora Private Docs Site
+
+Antora Private Docs Site is an OpenID Connect issuer.
+GitHub organizations opt in by installing one GitHub App.
+GitLab groups opt in by inviting one configured user.
+The listen address and the public issuer URL come from config.
+
+Copy `config/issuer.example.sdl` to `config/issuer.sdl`.
+Generate a signing PEM and set `ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH`.
+Other names are in link:environment-variables.adoc[Environment variables].
+
+[source,shell]
+----
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out signing.pem
+node bin/antora-private-docs.mjs serve --config config/issuer.sdl
+----
+
+This window shows the process.
+The listen line is the address.
+Ctrl+C stops it.
+
+== GitHub App
+
+[source,shell]
+----
+node bin/antora-private-docs.mjs github-manifest --config config/issuer.sdl
+----
+
+Open `http://127.0.0.1:8765/`.
+The form posts the manifest to `https://github.com/organizations/antora-supplemental/settings/apps/new`.
+The name on that screen is Antora Private Docs Site.
+Approve it there.
+Credentials land in gitignored `var/`.
+The command does not print the client secret or the private key.
+
+Organization members, read, is the only permission.
+An organization that has not installed the app is not in the token.
+
+== GitLab application
+
+[source,shell]
+----
+node bin/antora-private-docs.mjs gitlab-setup --config config/issuer.sdl
+----
+
+GitLab has no GitHub App installation.
+The application is group-owned, named Antora Private Docs Site, scope `read_api`.
+The instance URL is the `gitlab.instance.url` value.
+On gitlab.com the group `antora-supplemental` is not there yet.
+After it exists, the settings page is `https://gitlab.com/groups/antora-supplemental/-/settings/applications`.
+Redirect URI is `{issuer}/gitlab/callback`.
+
+Opt-in is an invite of `opt-in-username` (example `antora-private-docs`) to the group.
+Guest is enough.
+Groups that have not invited that user are excluded.
+Zero opted-in groups is a refusal page, not a token.
+
+== Relying parties
+
+A `client` block is a relying party: id, `secret-env`, and exact `redirect` values.
+Cloudflare Access is the example client `cloudflare-access`, generic OpenID Connect:
+
+* Auth URL `{issuer}/authorize`
+* Token URL `{issuer}/token`
+* Certificate URL `{issuer}/jwks`
+* Scope `openid`
+
+The groups claim uses `groups-claim` (default `groups`).
+Values look like `github:github.com:example-org` and `gitlab:gitlab.com:example-group`.
+The `forge` claim is `github` or `gitlab`.
+Client id `generic-rp` is the same shape for any other relying party.
+Adding a client does not replace an identity provider that is already in use.
+
+Another runtime can sit in front of this protocol later.
+This repository does not ship that adapter.

@@ -1,0 +1,52 @@
+// Antora Private Docs Site. Copy to config/issuer.sdl (gitignored) and set env names.
+// The listen address is where this process binds. issuer is the public URL relying parties use.
+// Neither value assumes a particular host.
+
+issuer "https://login.example.com"
+groups-claim "groups"
+
+listen {
+  host "127.0.0.1"
+  port 4180
+}
+
+signing-key {
+  pem-path-env "ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH"
+  kid "antora-private-docs-1"
+}
+
+// GitHub App named Antora Private Docs Site, owned by this organization.
+github {
+  web "https://github.com"
+  api "https://api.github.com"
+  owner "antora-supplemental"
+  slug "antora-private-docs-site"
+  app-id-env "ANTORA_PRIVATE_DOCS_GITHUB_APP_ID"
+  client-id-env "ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_ID"
+  client-secret-env "ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_SECRET"
+}
+
+// One block per GitLab host. Replace url for a self-managed instance.
+// Opt-in is membership of opt-in-username, not every group the person belongs to.
+gitlab {
+  instance {
+    url "https://gitlab.com"
+    owner-group "antora-supplemental"
+    opt-in-username "antora-private-docs"
+    client-id-env "ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_ID"
+    client-secret-env "ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_SECRET"
+  }
+}
+
+// Adding a relying party is another client block. No code change.
+client {
+  id "cloudflare-access"
+  secret-env "ANTORA_PRIVATE_DOCS_CLIENT_CLOUDFLARE_ACCESS"
+  redirect "https://<team-name>.cloudflareaccess.com/cdn-cgi/access/callback"
+}
+
+client {
+  id "generic-rp"
+  secret-env "ANTORA_PRIVATE_DOCS_CLIENT_GENERIC"
+  redirect "https://rp.example/callback"
+}
