@@ -1,6 +1,13 @@
 = Changelog
 :toc:
 
+== 2026-11-15
+
+=== Collapsible table of contents
+
+* The README table of contents sits in a details expander after the title and badges.
+* Detail: link:changelog-details/2026-11-15%20-%20collapsible-readme-toc.adoc[Collapsible table of contents].
+
 == 2026-11-13
 
 === Display name is Antora Private Docs Login
@@ -15,5 +22,6 @@
 
 == History and reports
 
+* 2026-11-15, link:changelog-details/2026-11-15%20-%20collapsible-readme-toc.adoc[Collapsible table of contents]: the README list opens under the title.
 * 2026-11-13, link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login]: the name an owner approves on GitHub and GitLab.
 * 2026-11-13, link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab]: what the first version checks before it issues a token.

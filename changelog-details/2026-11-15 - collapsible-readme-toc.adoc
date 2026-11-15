@@ -1,0 +1,7 @@
+= 2026-11-15
+
+== Collapsible table of contents
+
+The README table of contents is inside a details expander after the centered header.
+
+On GitHub the header is HTML, so the list is placed with `:toc: macro` and `toc::[]` after that header. The summary label is Table of Contents. An empty `:toc-title:` leaves the generated title div blank.

@@ -1,6 +1,7 @@
 ifndef::env-github[:icons: font]
-:toc:
+:toc: macro
 :toclevels: 2
+:toc-title:
 :sectanchors:
 
 ifdef::env-github[]
@@ -38,6 +39,15 @@ link:https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Explor
 link:docs/how-to.adoc[How to run it] ·
 link:https://github.com/antora-supplemental/private-docs-login/issues[Report Bug]
 endif::[]
+
+++++
+<details>
+<summary>Table of Contents</summary>
+++++
+toc::[]
+++++
+</details>
+++++
 
 == About
 
