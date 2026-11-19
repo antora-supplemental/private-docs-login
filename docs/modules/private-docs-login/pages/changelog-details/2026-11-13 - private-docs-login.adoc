@@ -1,4 +1,6 @@
 = 2026-11-13
+:hide-page:
+:navtree-parent: changelog.adoc
 
 == OpenID Connect issuer for GitHub and GitLab
 

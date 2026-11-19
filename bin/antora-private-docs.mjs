@@ -23,7 +23,7 @@ Create the GitHub App (one approval in the browser):
 Print the GitLab application steps:
   antora-private-docs gitlab-setup --config config/issuer.sdl
 
---version prints ${version}. Environment names are listed in docs/environment-variables.adoc.
+--version prints ${version}. Environment names are listed in docs/modules/private-docs-login/pages/environment-variables.adoc.
 `
 
 function flag(args, name, fallback) {
@@ -71,7 +71,7 @@ if (command === "serve") {
       console.log(`GitHub App id ${written.id}. Slug ${written.slug || "(not returned)"}.`)
       console.log(`Wrote ${written.jsonPath}`)
       console.log(`Wrote ${written.pemPath}`)
-      console.log("Set the GitHub env names in docs/environment-variables.adoc from that file. This command does not print the client secret or the private key.")
+      console.log("Set the GitHub env names in docs/modules/private-docs-login/pages/environment-variables.adoc from that file. This command does not print the client secret or the private key.")
     },
   })
   console.log(`This window is showing the GitHub App setup.`)

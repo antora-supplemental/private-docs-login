@@ -1,4 +1,6 @@
 = 2026-11-15
+:hide-page:
+:navtree-parent: changelog.adoc
 
 == Collapsible table of contents
 

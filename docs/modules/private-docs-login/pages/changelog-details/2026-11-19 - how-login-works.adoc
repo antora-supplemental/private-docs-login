@@ -1,4 +1,6 @@
 = 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
 
 == How login works
 

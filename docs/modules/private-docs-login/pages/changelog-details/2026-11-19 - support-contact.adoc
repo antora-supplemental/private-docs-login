@@ -1,8 +1,10 @@
 = 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
 
 == Support contact is DevCentr
 
 The README contact names DevCentr.org and support@devcentr.org.
 
 GitHub issues stay at dev-centr/private-docs-login.
-The how-to stays on the Antora Supplemental docs hub.
+The how-to is on the Dev-Centr docs site.

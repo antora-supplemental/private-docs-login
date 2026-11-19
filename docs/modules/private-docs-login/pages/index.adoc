@@ -1,0 +1,31 @@
+= Private docs login
+:description: A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.
+:page-audience: Site operators
+:page-usage-context: Module home on the Dev-Centr docs hub
+:page-orig-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Usage context:: {page-usage-context}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+A login provider for private documentation sites that use OpenID Connect.
+GitHub and GitLab organization members sign in through their org's installation.
+It brokers membership for those sites.
+An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup.
+
+xref:how-to.adoc[How to run it] is the login contract, when to run your own issuer, and the GitHub and GitLab setup.
+
+xref:environment-variables.adoc[Environment variables] names the settings.
+Values stay out of git.
+
+Repository::
+https://github.com/dev-centr/private-docs-login

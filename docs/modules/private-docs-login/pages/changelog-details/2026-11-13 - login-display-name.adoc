@@ -1,4 +1,6 @@
 = 2026-11-13
+:hide-page:
+:navtree-parent: changelog.adoc
 
 == Display name is Antora Private Docs Login
 

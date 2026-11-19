@@ -1,4 +1,4 @@
-export const CONTRACT_DOC_URL = "https://docs.antora-supplemental.org/home/how-to/private-docs-login/"
+export const CONTRACT_DOC_URL = "https://docs.devcentr.org/tools/private-docs-login/how-to/"
 
 export const ADMIN_MESSAGE = "If you do not want sign-in to pass through the publisher's issuer, stop and give your organization admin this message: this sign-in sends the reader through the publisher's issuer; keeping membership checks on the organization's own host means the organization runs its own issuer and its own GitHub App."
 

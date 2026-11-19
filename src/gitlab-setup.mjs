@@ -27,7 +27,7 @@ export async function gitlabSetupText({ instance, fetchImpl, issuer }) {
     "Do not enable api, read_repository, write_repository, or email.",
     `Opt-in: a group owner invites the GitLab user ${instance.optInUsername} to the group (Guest is enough).`,
     "A group the person belongs to, which has not invited that user, is left out of the token.",
-    "Copy the Application ID and secret into the env names in docs/environment-variables.adoc.",
+    "Copy the Application ID and secret into the env names in docs/modules/private-docs-login/pages/environment-variables.adoc.",
     "Do not commit the secret.",
   ].join("\n")
 }

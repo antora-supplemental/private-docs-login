@@ -1,65 +1,6 @@
 = Changelog
-:toc:
 
-== 2026-11-19
+The changelog is published at https://docs.devcentr.org/tools/private-docs-login/changelog/[Changelog].
+The playbook serves that URL.
 
-=== Support contact is DevCentr
-
-* The README contact names DevCentr.org and support@devcentr.org. GitHub issues stay on dev-centr/private-docs-login. The how-to stays on the Antora Supplemental docs hub.
-* Detail: link:changelog-details/2026-11-19%20-%20support-contact.adoc[Support contact is DevCentr].
-
-=== Login provider for private documentation
-
-* The README, the how-to, the package description, and the GitHub App manifest description call this a login provider for private documentation sites that use OpenID Connect. Antora is one example. The GitHub App name, the command name, the npm name, and the environment prefix are unchanged.
-* Detail: link:changelog-details/2026-11-19%20-%20login-provider.adoc[Login provider for private documentation].
-
-=== Repository home is dev-centr
-
-* The Git repository now lives at dev-centr/private-docs-login. The GitHub App name, the command name, and the environment prefix are unchanged.
-* Detail: link:changelog-details/2026-11-19%20-%20repository-home.adoc[Repository home is dev-centr].
-
-=== Membership broker
-
-* The opening says this service brokers GitHub and GitLab membership for private documentation sites, before the login steps.
-* Detail: link:changelog-details/2026-11-19%20-%20membership-broker.adoc[Membership broker].
-
-=== Sign-in and setup screens
-
-* The post-install setup page and the page shown before a reader is sent to a forge state the shared issuer and the privacy limit, and link to the login contract. The GitHub App description is the short form GitHub shows on its own dialog.
-* Detail: link:changelog-details/2026-11-19%20-%20sign-in-and-setup-screens.adoc[Sign-in and setup screens].
-
-=== How login works
-
-* The README and the how-to put the login contract before setup: one published GitHub App, the issuer callback, relying-party clients, and when to host a separate issuer.
-* Detail: link:changelog-details/2026-11-19%20-%20how-login-works.adoc[How login works].
-
-== 2026-11-15
-
-=== Collapsible table of contents
-
-* The README table of contents sits in a details expander after the title and badges.
-* Detail: link:changelog-details/2026-11-15%20-%20collapsible-readme-toc.adoc[Collapsible table of contents].
-
-== 2026-11-13
-
-=== Display name is Antora Private Docs Login
-
-* The GitHub App and the GitLab application an owner approves are named Antora Private Docs Login.
-* Detail: link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login].
-
-=== OpenID Connect issuer for GitHub and GitLab
-
-* Antora Private Docs Login is one issuer. GitHub organizations install one app. GitLab groups opt in by inviting a configured user. The groups claim name and the listen address come from config.
-* Detail: link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab].
-
-== History and reports
-
-* 2026-11-19, link:changelog-details/2026-11-19%20-%20support-contact.adoc[Support contact is DevCentr]: the README contact names DevCentr.org instead of Antora Supplemental.
-* 2026-11-19, link:changelog-details/2026-11-19%20-%20login-provider.adoc[Login provider for private documentation]: the reader-facing description, with Antora as one example.
-* 2026-11-19, link:changelog-details/2026-11-19%20-%20repository-home.adoc[Repository home is dev-centr]: the Git repository moved from antora-supplemental to dev-centr.
-* 2026-11-19, link:changelog-details/2026-11-19%20-%20membership-broker.adoc[Membership broker]: the opening sentence that names the role before the login steps.
-* 2026-11-19, link:changelog-details/2026-11-19%20-%20sign-in-and-setup-screens.adoc[Sign-in and setup screens]: what the setup page and the sign-in page tell an installer and a reader.
-* 2026-11-19, link:changelog-details/2026-11-19%20-%20how-login-works.adoc[How login works]: the login contract a site operator reads before setup.
-* 2026-11-15, link:changelog-details/2026-11-15%20-%20collapsible-readme-toc.adoc[Collapsible table of contents]: the README list opens under the title.
-* 2026-11-13, link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login]: the name an owner approves on GitHub and GitLab.
-* 2026-11-13, link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab]: what the first version checks before it issues a token.
+Source: link:docs/modules/private-docs-login/pages/changelog.adoc[changelog.adoc].

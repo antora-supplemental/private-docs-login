@@ -1,0 +1,19 @@
+= 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-orig-author: Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+== Docs home and run command
+
+The how-to for this login provider is the page the Dev-Centr docs playbook serves at https://docs.devcentr.org/tools/private-docs-login/how-to/ .
+This repository is the content source.
+The page is published on the next hub build.
+The Antora Supplemental how-to refers to that page.
+
+The README and the how-to run `antora-private-docs`.
+That is the package bin.
+The file is `bin/antora-private-docs.mjs`.
+
+Sign-in and setup pages link to that how-to.

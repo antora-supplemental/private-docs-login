@@ -50,7 +50,7 @@ async function signIn(app, { forge, instance, callbackPath }) {
   assert.equal(start.status, 200)
   const acceptance = await start.text()
   assert.match(acceptance, /stop and give your organization admin this message/)
-  assert.match(acceptance, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  assert.match(acceptance, /https:\/\/docs\.devcentr\.org\/tools\/private-docs-login\/how-to\//)
   const next = new URL(`https://login.example.com/authorize?${params}`)
   next.searchParams.set("accepted", "1")
   const redirect = await app.handle(new Request(next))
@@ -302,7 +302,7 @@ test("post-install setup page states what the installation allows", async () => 
   assert.match(html, /pass through the publisher's host/)
   assert.match(html, /login provider for OpenID Connect-enabled private sites/)
   assert.match(html, /An Antora site behind Cloudflare Access/)
-  assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  assert.match(html, /https:\/\/docs\.devcentr\.org\/tools\/private-docs-login\/how-to\//)
 })
 
 test("the forge chooser states the shared-issuer limit before GitHub", async () => {
@@ -338,7 +338,7 @@ test("the forge chooser states the shared-issuer limit before GitHub", async () 
   assert.match(html, /name="accepted" value="1"/)
   assert.match(html, /login provider for private documentation sites/)
   assert.match(html, /An Antora site behind Cloudflare Access/)
-  assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  assert.match(html, /https:\/\/docs\.devcentr\.org\/tools\/private-docs-login\/how-to\//)
 })
 
 test("GitLab setup names the app, the scope, and the opt-in user", async () => {

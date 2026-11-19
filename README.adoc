@@ -16,8 +16,8 @@ ifdef::env-github[]
 <h3 align="center">private-docs-login</h3>
 <p align="center">
 A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.<br />
-<a href="https://docs.antora-supplemental.org/home/how-to/private-docs-login/"><strong>Explore the docs »</strong></a><br /><br />
-<a href="https://github.com/dev-centr/private-docs-login/blob/main/docs/how-to.adoc">How to run it</a>
+<a href="https://docs.devcentr.org/tools/private-docs-login/"><strong>Explore the docs »</strong></a><br /><br />
+<a href="https://docs.devcentr.org/tools/private-docs-login/how-to/">How to run it</a>
 &middot;
 <a href="https://github.com/dev-centr/private-docs-login/issues">Report Bug</a>
 </p>
@@ -35,8 +35,8 @@ image:https://img.shields.io/github/issues/dev-centr/private-docs-login.svg?styl
 
 A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.
 
-link:https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Explore the docs] ·
-link:docs/how-to.adoc[How to run it] ·
+link:https://docs.devcentr.org/tools/private-docs-login/[Explore the docs] ·
+link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it] ·
 link:https://github.com/dev-centr/private-docs-login/issues[Report Bug]
 endif::[]
 
@@ -125,11 +125,14 @@ You do not need your own issuer when you trust the publisher's issuer, and organ
 
 Copy `config/issuer.example.sdl` to `config/issuer.sdl`.
 Point `ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH` at a PKCS#8 PEM.
-The other names are in link:docs/environment-variables.adoc[Environment variables].
+The other names are in link:https://docs.devcentr.org/tools/private-docs-login/environment-variables/[Environment variables].
+
+The command name is `antora-private-docs` (package bin, file `bin/antora-private-docs.mjs`).
+From this checkout, `npm link` puts that command on your PATH.
 
 [source,shell]
 ----
-node bin/antora-private-docs.mjs serve --config config/issuer.sdl
+antora-private-docs serve --config config/issuer.sdl
 ----
 
 This window shows the server.
@@ -140,17 +143,19 @@ Create the GitHub App (the browser approval is the remaining step):
 
 [source,shell]
 ----
-node bin/antora-private-docs.mjs github-manifest --config config/issuer.sdl
+antora-private-docs github-manifest --config config/issuer.sdl
 ----
 
 Print the GitLab application URL and fields:
 
 [source,shell]
 ----
-node bin/antora-private-docs.mjs gitlab-setup --config config/issuer.sdl
+antora-private-docs gitlab-setup --config config/issuer.sdl
 ----
 
-The task write-up is link:docs/how-to.adoc[How to run it] and, on the docs site, https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Private docs login].
+The task write-up is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
+The playbook serves that URL.
+It is published on the next Dev-Centr docs build.
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -167,7 +172,9 @@ The task write-up is link:docs/how-to.adoc[How to run it] and, on the docs site,
 
 == Changelog
 
-link:CHANGELOG.adoc[CHANGELOG.adoc]
+https://docs.devcentr.org/tools/private-docs-login/changelog/[Changelog]
+
+Source: link:docs/modules/private-docs-login/pages/changelog.adoc[changelog.adoc]
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -186,7 +193,7 @@ Mozilla Public License 2.0. See link:LICENSE[LICENSE].
 DevCentr.org — support@devcentr.org
 
 * Project: https://github.com/dev-centr/private-docs-login
-* Docs: https://docs.antora-supplemental.org/home/how-to/private-docs-login/
+* Docs: https://docs.devcentr.org/tools/private-docs-login/
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
