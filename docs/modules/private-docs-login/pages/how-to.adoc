@@ -1,4 +1,4 @@
-= How to run it
+= How to host the issuer
 :description: A login provider for private documentation sites that use OpenID Connect. An organization installs the published GitHub App. Hosting the issuer is a separate job.
 :page-audience: Organization administrators
 :page-usage-context: How-to on the Dev-Centr docs hub for installing the published GitHub App, pointing a documentation site at the issuer, and hosting an issuer
@@ -75,6 +75,11 @@ Antora does not have a playbook extension for this login.
 An Antora site is static.
 The usual client in front of it is Cloudflare Access.
 The hostname and Allow policy steps are in https://docs.devcentr.org/general-knowledge/how-to/cloudflare-access-static-site/[Cloudflare Access for static sites].
+A public Antora site can add a link to the private or team site with https://docs.antora-supplemental.org/related-docs/[Related Docs] (`@antora-supplemental/related-docs`).
+That extension puts the link on each page of the public site.
+The link opens the private or team site.
+facto-stack includes Related Docs.
+Readers still sign in through this issuer.
 
 == How login works
 

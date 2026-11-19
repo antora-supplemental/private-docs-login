@@ -20,6 +20,12 @@ endif::[]
 
 == 2026-11-19
 
+=== How-to title names the issuer
+
+* The published how-to heading is How to host the issuer. Installing the published GitHub App and hosting an issuer stay separate sections.
+* The Antora paragraphs link Related Docs (`@antora-supplemental/related-docs`). That extension adds a link on a public site that opens a private or team site. facto-stack includes it. Readers still sign in through this issuer.
+* Detail: xref:changelog-details/2026-11-19 - how-to-title-names-the-issuer.adoc[How-to title names the issuer].
+
 === Install is the GitHub App
 
 * The README and the how-to start with an organization owner installing the published GitHub App. Running `private-docs-login` is for a person hosting the issuer, from a checkout of this repository.
@@ -97,6 +103,7 @@ endif::[]
 
 == History and reports
 
+* 2026-11-19, xref:changelog-details/2026-11-19 - how-to-title-names-the-issuer.adoc[How-to title names the issuer]: the public article name, and the link from a public Antora site to a private or team site.
 * 2026-11-19, xref:changelog-details/2026-11-19 - install-is-the-github-app.adoc[Install is the GitHub App]: who installs the published app, who hosts the issuer, and where an Antora site is wired.
 * 2026-11-19, xref:changelog-details/2026-11-19 - old-environment-prefix-is-gone.adoc[Old environment prefix is gone]: `ANTORA_PRIVATE_DOCS_` is no longer read.
 * 2026-11-19, xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name]: the command, the npm package, the environment prefix, and the GitHub App display name.

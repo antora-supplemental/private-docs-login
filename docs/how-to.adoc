@@ -1,5 +1,7 @@
-= How to run it
+= How to host the issuer
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
-The public article is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
+The public article is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to host the issuer].
 
 Source: link:modules/private-docs-login/pages/how-to.adoc[how-to.adoc].

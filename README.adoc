@@ -3,6 +3,8 @@ ifndef::env-github[:icons: font]
 :toclevels: 2
 :toc-title:
 :sectanchors:
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
 ifdef::env-github[]
 ++++
@@ -17,7 +19,7 @@ ifdef::env-github[]
 <p align="center">
 A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.<br />
 <a href="https://docs.devcentr.org/tools/private-docs-login/"><strong>Explore the docs »</strong></a><br /><br />
-<a href="https://docs.devcentr.org/tools/private-docs-login/how-to/">How to run it</a>
+<a href="https://docs.devcentr.org/tools/private-docs-login/how-to/">How to host the issuer</a>
 &middot;
 <a href="https://github.com/dev-centr/private-docs-login/issues">Report Bug</a>
 </p>
@@ -36,7 +38,7 @@ image:https://img.shields.io/github/issues/dev-centr/private-docs-login.svg?styl
 A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.
 
 link:https://docs.devcentr.org/tools/private-docs-login/[Explore the docs] ·
-link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it] ·
+link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to host the issuer] ·
 link:https://github.com/dev-centr/private-docs-login/issues[Report Bug]
 endif::[]
 
@@ -92,8 +94,11 @@ The site sends the reader to the issuer and admits them only when the token name
 Antora does not have a playbook extension for this login.
 An Antora site is static.
 The usual client in front of it is Cloudflare Access.
-The issuer URLs and the groups claim are in link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
+The issuer URLs and the groups claim are in link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to host the issuer].
 The hostname and Allow policy steps are in link:https://docs.devcentr.org/general-knowledge/how-to/cloudflare-access-static-site/[Cloudflare Access for static sites].
+A public Antora site can add a link to the private or team site with link:https://docs.antora-supplemental.org/related-docs/[Related Docs].
+facto-stack includes that extension.
+Readers still sign in through this issuer.
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -186,7 +191,7 @@ Print this issuer's GitLab application URL and fields:
 private-docs-login gitlab-setup --config config/issuer.sdl
 ----
 
-The steps for the published app, the documentation site, and a host you operate are in link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
+The steps for the published app, the documentation site, and a host you operate are in link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to host the issuer].
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

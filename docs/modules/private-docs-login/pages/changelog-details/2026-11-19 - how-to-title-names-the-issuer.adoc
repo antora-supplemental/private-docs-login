@@ -1,0 +1,20 @@
+= 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-audience: Maintainers and readers tracking functional history of this component
+:page-usage-context: Changelog detail for the how-to title and the Related Docs link
+:page-orig-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+== How-to title names the issuer
+
+The published how-to heading is How to host the issuer.
+Installing the published GitHub App and hosting an issuer stay separate sections on that page and in the README.
+
+The Antora paragraphs link Related Docs (`@antora-supplemental/related-docs`).
+That extension adds a link on each page of a public Antora site.
+The link opens a private or team site.
+facto-stack includes the extension.
+Readers still sign in through this issuer.
+Cloudflare Access remains the usual client in front of a static Antora site.
