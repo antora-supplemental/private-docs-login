@@ -52,6 +52,7 @@ toc::[]
 == About
 
 Antora Private Docs Login signs private-docs readers in.
+It brokers GitHub and GitLab membership for private documentation sites.
 The service is an OpenID Connect issuer any relying party can use.
 GitHub organizations opt in by installing the GitHub App named Antora Private Docs Login.
 GitLab groups opt in by inviting a configured user, because GitLab does not install apps the way GitHub does.

@@ -1,0 +1,11 @@
+= 2026-11-19
+
+== Membership broker
+
+The README and the how-to say what the service does before they explain the login steps.
+
+It brokers GitHub and GitLab membership for private documentation sites.
+
+The pages still call the service an OpenID Connect issuer.
+A docs site is still a relying party.
+The GitHub App name is unchanged.
