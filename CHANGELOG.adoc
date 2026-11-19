@@ -3,6 +3,11 @@
 
 == 2026-11-19
 
+=== Support contact is DevCentr
+
+* The README contact names DevCentr.org and support@devcentr.org. GitHub issues stay on dev-centr/private-docs-login. The how-to stays on the Antora Supplemental docs hub.
+* Detail: link:changelog-details/2026-11-19%20-%20support-contact.adoc[Support contact is DevCentr].
+
 === Login provider for private documentation
 
 * The README, the how-to, the package description, and the GitHub App manifest description call this a login provider for private documentation sites that use OpenID Connect. Antora is one example. The GitHub App name, the command name, the npm name, and the environment prefix are unchanged.
@@ -49,6 +54,7 @@
 
 == History and reports
 
+* 2026-11-19, link:changelog-details/2026-11-19%20-%20support-contact.adoc[Support contact is DevCentr]: the README contact names DevCentr.org instead of Antora Supplemental.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20login-provider.adoc[Login provider for private documentation]: the reader-facing description, with Antora as one example.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20repository-home.adoc[Repository home is dev-centr]: the Git repository moved from antora-supplemental to dev-centr.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20membership-broker.adoc[Membership broker]: the opening sentence that names the role before the login steps.

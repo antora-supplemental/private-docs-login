@@ -1,0 +1,8 @@
+= 2026-11-19
+
+== Support contact is DevCentr
+
+The README contact names DevCentr.org and support@devcentr.org.
+
+GitHub issues stay at dev-centr/private-docs-login.
+The how-to stays on the Antora Supplemental docs hub.

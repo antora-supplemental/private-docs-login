@@ -183,7 +183,7 @@ Mozilla Public License 2.0. See link:LICENSE[LICENSE].
 
 == Contact
 
-Antora Supplemental - support@antora-supplemental.org
+DevCentr.org — support@devcentr.org
 
 * Project: https://github.com/dev-centr/private-docs-login
 * Docs: https://docs.antora-supplemental.org/home/how-to/private-docs-login/
