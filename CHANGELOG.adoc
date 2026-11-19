@@ -3,6 +3,11 @@
 
 == 2026-11-19
 
+=== Sign-in and setup screens
+
+* The post-install setup page and the page shown before a reader is sent to a forge state the shared issuer and the privacy limit, and link to the login contract. The GitHub App description is the short form GitHub shows on its own dialog.
+* Detail: link:changelog-details/2026-11-19%20-%20sign-in-and-setup-screens.adoc[Sign-in and setup screens].
+
 === How login works
 
 * The README and the how-to put the login contract before setup: one published GitHub App, the issuer callback, relying-party clients, and when to host a separate issuer.
@@ -29,6 +34,7 @@
 
 == History and reports
 
+* 2026-11-19, link:changelog-details/2026-11-19%20-%20sign-in-and-setup-screens.adoc[Sign-in and setup screens]: what the setup page and the sign-in page tell an installer and a reader.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20how-login-works.adoc[How login works]: the login contract a site operator reads before setup.
 * 2026-11-15, link:changelog-details/2026-11-15%20-%20collapsible-readme-toc.adoc[Collapsible table of contents]: the README list opens under the title.
 * 2026-11-13, link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login]: the name an owner approves on GitHub and GitLab.

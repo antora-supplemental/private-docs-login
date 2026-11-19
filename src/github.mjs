@@ -1,4 +1,5 @@
 import { hostOf } from "./codec.mjs"
+import { CONTRACT_DOC_URL } from "./html.mjs"
 
 const API_VERSION = "2022-11-28"
 
@@ -99,6 +100,7 @@ export function githubManifest({ issuer, setupOrigin }) {
   const setup = setupOrigin.replace(/\/$/, "")
   return {
     name: "Antora Private Docs Login",
+    description: `One published GitHub App; its only callback is this issuer. Installing lets this issuer name your members in tokens for docs sites registered here. Each site checks its own org. Sign-in passes through the publisher. Run your own issuer and GitHub App to keep that on your host. ${CONTRACT_DOC_URL}`,
     url: root,
     redirect_url: `${setup}/setup/github/callback`,
     callback_urls: [`${root}/github/callback`],

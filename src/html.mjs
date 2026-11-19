@@ -1,3 +1,7 @@
+export const CONTRACT_DOC_URL = "https://docs.antora-supplemental.org/home/how-to/private-docs-login/"
+
+export const ADMIN_MESSAGE = "If you do not want sign-in to pass through the publisher's issuer, stop and give your organization admin this message: this sign-in sends the reader through the publisher's issuer; keeping membership checks on the organization's own host means the organization runs its own issuer and its own GitHub App."
+
 export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;",
@@ -49,11 +53,46 @@ export function refusalPage({ forge, installUrl, optInUsername, instanceUrl }) {
 ${link}`)
 }
 
-export function chooserPage(providers, hidden) {
-  const fields = Object.entries(hidden)
+function hiddenFields(hidden) {
+  return Object.entries(hidden)
     .filter(([, v]) => v != null && v !== "")
     .map(([k, v]) => `<input type="hidden" name="${escapeHtml(k)}" value="${escapeHtml(v)}">`)
     .join("\n")
+}
+
+function contractLink() {
+  return `<p>The full contract is <a href="${escapeHtml(CONTRACT_DOC_URL)}">How login works and Run your own issuer</a>.</p>`
+}
+
+function connectExplanation() {
+  return `
+<p>This sign-in uses one published GitHub App. Its only GitHub callback is this issuer. Customer docs URLs are not entered on that app.</p>
+<p>A private docs site admits a reader only if the token names that organization. Installing the app lets this issuer name that organization's members in tokens for any docs site registered here. Each site checks for its own organization.</p>
+<p>Reader sign-in, the fact of membership, and the return to a registered site pass through the publisher's issuer.</p>
+<p>${escapeHtml(ADMIN_MESSAGE)}</p>
+${contractLink()}`
+}
+
+export function installSetupPage() {
+  return htmlResponse(200, "Antora Private Docs Login is installed", `
+<p>You installed one published GitHub App. Its only GitHub callback is this issuer. Customer docs URLs are not entered on the GitHub App.</p>
+<p>Installing this app lets this issuer name members of this organization in tokens for docs sites registered with the issuer. It does not add those members to someone else's docs. Each site still checks for its own organization.</p>
+<p>Reader sign-in, membership checks, and the return to a registered site pass through the publisher's host. If you do not want that, do not rely on this installation. Run your own issuer and your own GitHub App. You cannot point this app at an issuer you host.</p>
+${contractLink()}`)
+}
+
+export function connectAcceptancePage(hidden) {
+  return htmlResponse(200, "Sign in through the publisher's issuer", `
+${connectExplanation()}
+<form action="/authorize" method="get">
+${hiddenFields(hidden)}
+<input type="hidden" name="accepted" value="1">
+<button type="submit">Continue</button>
+</form>`)
+}
+
+export function chooserPage(providers, hidden) {
+  const fields = hiddenFields(hidden)
   const buttons = providers.map((p) => {
     const extra = p.instanceUrl
       ? `<input type="hidden" name="instance" value="${escapeHtml(p.instanceUrl)}" form="${escapeHtml(p.formId)}">`
@@ -61,12 +100,13 @@ export function chooserPage(providers, hidden) {
     return `<form id="${escapeHtml(p.formId)}" action="/authorize" method="get">
 ${fields}
 <input type="hidden" name="forge" value="${escapeHtml(p.forge)}">
+<input type="hidden" name="accepted" value="1">
 ${extra}
 <button type="submit">${escapeHtml(p.label)}</button>
 </form>`
   }).join("\n")
   return htmlResponse(200, "Choose where to sign in", `
-<p>Antora Private Docs Login signs you in through a forge your organization has opted into.</p>
+${connectExplanation()}
 <p>Choose GitHub or a GitLab host. You will come back here only if that organization or group has not opted in.</p>
 ${buttons}`)
 }

@@ -78,6 +78,15 @@ The command does not print the client secret or the private key.
 Organization members, read, is the only permission.
 An organization that has not installed the app is not in the token.
 
+GitHub's install dialog shows the app name, the owner, the permissions, and the short description on the manifest.
+It does not show this repository.
+After install, GitHub opens `{issuer}/github/setup`.
+That page says the installation lets this issuer name the organization's members in tokens for docs sites registered with the issuer, that each site still checks for its own organization, and that membership checks pass through the publisher's host.
+
+A reader stays on this issuer until they continue.
+That page states the same limit.
+If they do not want sign-in to pass through the publisher, it tells them to stop and give the message, plus the docs link, to their organization admin.
+
 == GitLab application
 
 [source,shell]

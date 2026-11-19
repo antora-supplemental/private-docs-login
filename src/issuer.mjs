@@ -1,5 +1,5 @@
 import { hostOf, pkceS256, randomId, secretsMatch, signJwt } from "./codec.mjs"
-import { badRedirectPage, chooserPage, forgeErrorPage, refusalPage } from "./html.mjs"
+import { badRedirectPage, chooserPage, connectAcceptancePage, forgeErrorPage, installSetupPage, refusalPage } from "./html.mjs"
 import { memoryStore } from "./store.mjs"
 
 const REQUEST_TTL = 10 * 60 * 1000
@@ -23,10 +23,8 @@ export function createIssuer(options) {
     if (request.method === "GET" && url.pathname === "/.well-known/openid-configuration") {
       return json(discovery(issuer, groupsClaim))
     }
-    if (request.method === "GET" && (url.pathname === "/jwks" || url.pathname === "/github/setup")) {
-      if (url.pathname === "/jwks") return json({ keys: [options.publicJwk] })
-      return text("Antora Private Docs Login is installed. Members of that organization can sign in.")
-    }
+    if (request.method === "GET" && url.pathname === "/jwks") return json({ keys: [options.publicJwk] })
+    if (request.method === "GET" && url.pathname === "/github/setup") return installSetupPage()
     if (request.method === "GET" && url.pathname === "/authorize") return authorize(url)
     if (request.method === "GET" && (url.pathname === "/github/callback" || url.pathname === "/gitlab/callback")) {
       return callback(url)
@@ -54,24 +52,32 @@ export function createIssuer(options) {
       return true
     })
     if (matches.length === 0) return json({ error: "invalid_request", error_description: "unknown forge" }, 400)
+    const pendingFields = {
+      client_id: client.id,
+      redirect_uri: redirectUri,
+      response_type: "code",
+      scope,
+      state: params.get("state") || "",
+      nonce: params.get("nonce") || "",
+      code_challenge: params.get("code_challenge") || "",
+      code_challenge_method: params.get("code_challenge_method") || "",
+    }
     if (matches.length > 1) {
       return chooserPage(matches.map((provider, index) => ({
         forge: provider.id,
         label: provider.label,
         instanceUrl: provider.instanceUrl || "",
         formId: `forge-${index}`,
-      })), {
-        client_id: client.id,
-        redirect_uri: redirectUri,
-        response_type: "code",
-        scope,
-        state: params.get("state") || "",
-        nonce: params.get("nonce") || "",
-        code_challenge: params.get("code_challenge") || "",
-        code_challenge_method: params.get("code_challenge_method") || "",
-      })
+      })), pendingFields)
     }
     const provider = matches[0]
+    if (params.get("accepted") !== "1") {
+      return connectAcceptancePage({
+        ...pendingFields,
+        forge: provider.id,
+        instance: provider.instanceUrl || "",
+      })
+    }
     const state = randomId()
     requests.put(state, {
       clientId: client.id,
@@ -215,10 +221,6 @@ function json(body, status = 200) {
     status,
     headers: { "content-type": "application/json", "cache-control": "no-store" },
   })
-}
-
-function text(body) {
-  return new Response(body, { status: 200, headers: { "content-type": "text/plain; charset=utf-8" } })
 }
 
 function redirect(location) {

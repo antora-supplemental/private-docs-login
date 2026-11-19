@@ -47,8 +47,15 @@ async function signIn(app, { forge, instance, callbackPath }) {
   })
   if (instance) params.set("instance", instance)
   const start = await app.handle(new Request(`https://login.example.com/authorize?${params}`))
-  assert.equal(start.status, 302)
-  const state = new URL(start.headers.get("location")).searchParams.get("state")
+  assert.equal(start.status, 200)
+  const acceptance = await start.text()
+  assert.match(acceptance, /stop and give your organization admin this message/)
+  assert.match(acceptance, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  const next = new URL(`https://login.example.com/authorize?${params}`)
+  next.searchParams.set("accepted", "1")
+  const redirect = await app.handle(new Request(next))
+  assert.equal(redirect.status, 302)
+  const state = new URL(redirect.headers.get("location")).searchParams.get("state")
   const back = await app.handle(new Request(`https://login.example.com${callbackPath}?code=abc&state=${state}`))
   return back
 }
@@ -266,6 +273,9 @@ test("GitHub manifest names the app and asks only for member read", () => {
     setupOrigin: "http://127.0.0.1:8765",
   })
   assert.equal(manifest.name, "Antora Private Docs Login")
+  assert.match(manifest.description, /Sign-in passes through the publisher/)
+  assert.match(manifest.description, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  assert.ok(manifest.description.length <= 350)
   assert.deepEqual(manifest.default_permissions, { members: "read" })
   assert.equal(JSON.stringify(manifest).includes("contents"), false)
   assert.equal(JSON.stringify(manifest).includes("email"), false)
@@ -277,6 +287,54 @@ test("GitHub manifest names the app and asks only for member read", () => {
   })
   assert.match(html, /organizations\/antora-supplemental\/settings\/apps\/new/)
   assert.match(html, /Antora Private Docs Login/)
+  assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+})
+
+test("post-install setup page states what the installation allows", async () => {
+  const material = await keys()
+  const app = createIssuer({ ...material, issuer: "https://login.example.com", clients: clients(), kid: "test" })
+  const res = await app.handle(new Request("https://login.example.com/github/setup"))
+  assert.equal(res.status, 200)
+  assert.match(res.headers.get("content-type"), /text\/html/)
+  const html = await res.text()
+  assert.match(html, /name members of this organization in tokens/)
+  assert.match(html, /Each site still checks for its own organization/)
+  assert.match(html, /pass through the publisher's host/)
+  assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+})
+
+test("the forge chooser states the shared-issuer limit before GitHub", async () => {
+  const material = await keys()
+  const github = createGithubForge({
+    fetchImpl: githubFetch([]),
+    clientId: "cid",
+    clientSecret: "csecret",
+    appId: 42,
+    apiBase: "https://api.github.com",
+    webBase: "https://github.com",
+    slug: "antora-private-docs-site",
+  })
+  const gitlab = createGitlabForge({
+    fetchImpl: gitlabFetch([], {}),
+    instanceUrl: "https://gitlab.example.com",
+    clientId: "gid",
+    clientSecret: "gsecret",
+    optInUsername: "antora-private-docs",
+  })
+  const app = createIssuer({
+    ...material,
+    issuer: "https://login.example.com",
+    clients: clients(),
+    kid: "test",
+    github,
+    gitlab: [gitlab],
+  })
+  const res = await app.handle(new Request("https://login.example.com/authorize?client_id=rp&redirect_uri=https%3A%2F%2Frp.example%2Fcallback&response_type=code&scope=openid"))
+  assert.equal(res.status, 200)
+  const html = await res.text()
+  assert.match(html, /stop and give your organization admin this message/)
+  assert.match(html, /name="accepted" value="1"/)
+  assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
 })
 
 test("GitLab setup names the app, the scope, and the opt-in user", async () => {

@@ -1,0 +1,17 @@
+= 2026-11-19
+
+== Sign-in and setup screens
+
+GitHub's install dialog and GitHub's user authorization dialog stay on GitHub.
+They show the app name, the owner, the permissions, and the short description stored on the app.
+They do not render this repository's README.
+
+The description on the GitHub App manifest is that short text.
+It names the one published app, says sign-in passes through the publisher, and links to the login contract.
+
+After an organization installs the app, GitHub redirects to `/github/setup` on this issuer.
+That page says the installation lets this issuer name members of the organization in tokens for docs sites registered with the issuer, that each site still checks for its own organization, and that membership checks and the return trip pass through the publisher's host.
+
+Before this issuer sends a reader to GitHub or GitLab, it shows the same model.
+If the reader does not want sign-in to pass through the publisher's issuer, the page tells them to stop and give their organization admin a message: run your own issuer and your own GitHub App.
+The page links to How login works and Run your own issuer on the docs site.

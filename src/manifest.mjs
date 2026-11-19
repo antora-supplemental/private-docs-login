@@ -13,6 +13,7 @@ export function manifestForm({ webBase, owner, manifest }) {
 <main>
 <h1>Create the GitHub App</h1>
 <p>Antora Private Docs Login is one GitHub App. This page sends GitHub the manifest. You approve it in the next screen. The app is owned by ${escapeHtml(owner)}.</p>
+<p>GitHub's install dialog shows this description, and nothing else from this repository: ${escapeHtml(manifest.description || "")}</p>
 <p>Leave this window open. GitHub will return here with a code, and the command will write credentials into a gitignored folder.</p>
 <form method="post" action="${escapeHtml(action)}">
 <input type="hidden" name="manifest" id="manifest">
