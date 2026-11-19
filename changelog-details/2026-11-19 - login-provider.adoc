@@ -1,0 +1,21 @@
+= 2026-11-19
+
+== Login provider for private documentation
+
+The README lead, the package description, and the GitHub App manifest description use one subtitle.
+
+A login provider for private documentation sites that use OpenID Connect.
+GitHub and GitLab org members sign in through their org's installation.
+
+The About text and the post-install page use the longer line.
+
+A login provider for OpenID Connect-enabled private sites.
+It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.
+
+The pages still say the service brokers GitHub and GitLab membership.
+A section named What this is for says the mechanism is general OpenID Connect, and that this distribution is for private documentation rather than a generic identity provider.
+An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one example.
+The issuer does not gate an arbitrary web application.
+
+The GitHub App name stays Antora Private Docs Login.
+The command name, the npm package name, and the environment prefix are unchanged.

@@ -273,8 +273,8 @@ test("GitHub manifest names the app and asks only for member read", () => {
     setupOrigin: "http://127.0.0.1:8765",
   })
   assert.equal(manifest.name, "Antora Private Docs Login")
-  assert.match(manifest.description, /Sign-in passes through the publisher/)
-  assert.match(manifest.description, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  assert.match(manifest.description, /A login provider for private documentation sites that use OpenID Connect/)
+  assert.match(manifest.description, /GitHub and GitLab org members sign in through their org's installation/)
   assert.ok(manifest.description.length <= 350)
   assert.deepEqual(manifest.default_permissions, { members: "read" })
   assert.equal(JSON.stringify(manifest).includes("contents"), false)
@@ -287,7 +287,7 @@ test("GitHub manifest names the app and asks only for member read", () => {
   })
   assert.match(html, /organizations\/antora-supplemental\/settings\/apps\/new/)
   assert.match(html, /Antora Private Docs Login/)
-  assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
+  assert.match(html, /login provider for private documentation sites/)
 })
 
 test("post-install setup page states what the installation allows", async () => {
@@ -300,6 +300,8 @@ test("post-install setup page states what the installation allows", async () => 
   assert.match(html, /name members of this organization in tokens/)
   assert.match(html, /Each site still checks for its own organization/)
   assert.match(html, /pass through the publisher's host/)
+  assert.match(html, /login provider for OpenID Connect-enabled private sites/)
+  assert.match(html, /An Antora site behind Cloudflare Access/)
   assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
 })
 
@@ -334,6 +336,8 @@ test("the forge chooser states the shared-issuer limit before GitHub", async () 
   const html = await res.text()
   assert.match(html, /stop and give your organization admin this message/)
   assert.match(html, /name="accepted" value="1"/)
+  assert.match(html, /login provider for private documentation sites/)
+  assert.match(html, /An Antora site behind Cloudflare Access/)
   assert.match(html, /https:\/\/docs\.antora-supplemental\.org\/home\/how-to\/private-docs-login\//)
 })
 

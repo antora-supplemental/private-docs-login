@@ -2,7 +2,7 @@
   "name": "@antora-supplemental/private-docs-login",
   "version": "0.1.0",
   "private": true,
-  "description": "OpenID Connect issuer for private docs. GitHub organizations install one GitHub App. GitLab groups opt in by membership.",
+  "description": "A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.",
   "license": "MPL-2.0",
   "author": "Ryan Johnson (https://github.com/AMDphreak)",
   "homepage": "https://github.com/dev-centr/private-docs-login",

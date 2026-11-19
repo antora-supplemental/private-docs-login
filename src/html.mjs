@@ -66,8 +66,9 @@ function contractLink() {
 
 function connectExplanation() {
   return `
-<p>This sign-in uses one published GitHub App. Its only GitHub callback is this issuer. Customer docs URLs are not entered on that app.</p>
-<p>A private docs site admits a reader only if the token names that organization. Installing the app lets this issuer name that organization's members in tokens for any docs site registered here. Each site checks for its own organization.</p>
+<p>This is a login provider for private documentation sites that use OpenID Connect. It brokers GitHub and GitLab membership. Member-gated docs hubs, handbooks, and internal guides are the audience. An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup.</p>
+<p>This sign-in uses one published GitHub App. Its only GitHub callback is this issuer. Customer documentation URLs are not entered on that app.</p>
+<p>A private documentation site admits a reader only if the token names that organization. Installing the app lets this issuer name that organization's members in tokens for private documentation sites registered here. Each site checks for its own organization.</p>
 <p>Reader sign-in, the fact of membership, and the return to a registered site pass through the publisher's issuer.</p>
 <p>${escapeHtml(ADMIN_MESSAGE)}</p>
 ${contractLink()}`
@@ -75,8 +76,10 @@ ${contractLink()}`
 
 export function installSetupPage() {
   return htmlResponse(200, "Antora Private Docs Login is installed", `
-<p>You installed one published GitHub App. Its only GitHub callback is this issuer. Customer docs URLs are not entered on the GitHub App.</p>
-<p>Installing this app lets this issuer name members of this organization in tokens for docs sites registered with the issuer. It does not add those members to someone else's docs. Each site still checks for its own organization.</p>
+<p>A login provider for OpenID Connect-enabled private sites. It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.</p>
+<p>You installed one published GitHub App. Its only GitHub callback is this issuer. Customer documentation URLs are not entered on the GitHub App.</p>
+<p>Installing this app lets this issuer name members of this organization in tokens for private documentation sites registered with the issuer. It does not add those members to someone else's documentation. Each site still checks for its own organization.</p>
+<p>Member-gated docs hubs, handbooks, and internal guides are the audience. An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup.</p>
 <p>Reader sign-in, membership checks, and the return to a registered site pass through the publisher's host. If you do not want that, do not rely on this installation. Run your own issuer and your own GitHub App. You cannot point this app at an issuer you host.</p>
 ${contractLink()}`)
 }

@@ -3,6 +3,11 @@
 
 == 2026-11-19
 
+=== Login provider for private documentation
+
+* The README, the how-to, the package description, and the GitHub App manifest description call this a login provider for private documentation sites that use OpenID Connect. Antora is one example. The GitHub App name, the command name, the npm name, and the environment prefix are unchanged.
+* Detail: link:changelog-details/2026-11-19%20-%20login-provider.adoc[Login provider for private documentation].
+
 === Repository home is dev-centr
 
 * The Git repository now lives at dev-centr/private-docs-login. The GitHub App name, the command name, and the environment prefix are unchanged.
@@ -44,6 +49,7 @@
 
 == History and reports
 
+* 2026-11-19, link:changelog-details/2026-11-19%20-%20login-provider.adoc[Login provider for private documentation]: the reader-facing description, with Antora as one example.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20repository-home.adoc[Repository home is dev-centr]: the Git repository moved from antora-supplemental to dev-centr.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20membership-broker.adoc[Membership broker]: the opening sentence that names the role before the login steps.
 * 2026-11-19, link:changelog-details/2026-11-19%20-%20sign-in-and-setup-screens.adoc[Sign-in and setup screens]: what the setup page and the sign-in page tell an installer and a reader.
