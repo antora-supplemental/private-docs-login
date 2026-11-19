@@ -1,0 +1,15 @@
+= 2026-11-19
+
+== How login works
+
+The README and the how-to state the login contract before setup.
+
+One published GitHub App serves many organizations.
+GitHub calls only the issuer callback.
+A docs site is a client registered on the issuer, not a URL on the GitHub App.
+An outside organization installs that app.
+It does not create a new GitHub App or fork the repository to use the hosted issuer.
+
+Hosting a separate issuer means hosting a separate GitHub App.
+The publisher's app cannot be pointed at another host.
+The pages also say when a separate issuer is warranted, and when membership gating on the published issuer is enough.

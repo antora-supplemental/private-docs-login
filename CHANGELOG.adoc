@@ -1,6 +1,13 @@
 = Changelog
 :toc:
 
+== 2026-11-19
+
+=== How login works
+
+* The README and the how-to put the login contract before setup: one published GitHub App, the issuer callback, relying-party clients, and when to host a separate issuer.
+* Detail: link:changelog-details/2026-11-19%20-%20how-login-works.adoc[How login works].
+
 == 2026-11-15
 
 === Collapsible table of contents
@@ -22,6 +29,7 @@
 
 == History and reports
 
+* 2026-11-19, link:changelog-details/2026-11-19%20-%20how-login-works.adoc[How login works]: the login contract a site operator reads before setup.
 * 2026-11-15, link:changelog-details/2026-11-15%20-%20collapsible-readme-toc.adoc[Collapsible table of contents]: the README list opens under the title.
 * 2026-11-13, link:changelog-details/2026-11-13%20-%20login-display-name.adoc[Display name is Antora Private Docs Login]: the name an owner approves on GitHub and GitLab.
 * 2026-11-13, link:changelog-details/2026-11-13%20-%20private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab]: what the first version checks before it issues a token.
