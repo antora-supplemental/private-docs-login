@@ -8,28 +8,28 @@ ifdef::env-github[]
 ++++
 <a id="readme-top"></a>
 <div align="center">
-<a href="https://github.com/antora-supplemental/private-docs-login/graphs/contributors"><img src="https://img.shields.io/github/contributors/antora-supplemental/private-docs-login.svg?style=for-the-badge" alt="Contributors"></a>
-<a href="https://github.com/antora-supplemental/private-docs-login/network/members"><img src="https://img.shields.io/github/forks/antora-supplemental/private-docs-login.svg?style=for-the-badge" alt="Forks"></a>
-<a href="https://github.com/antora-supplemental/private-docs-login/stargazers"><img src="https://img.shields.io/github/stars/antora-supplemental/private-docs-login.svg?style=for-the-badge" alt="Stars"></a>
-<a href="https://github.com/antora-supplemental/private-docs-login/issues"><img src="https://img.shields.io/github/issues/antora-supplemental/private-docs-login.svg?style=for-the-badge" alt="Issues"></a>
+<a href="https://github.com/dev-centr/private-docs-login/graphs/contributors"><img src="https://img.shields.io/github/contributors/dev-centr/private-docs-login.svg?style=for-the-badge" alt="Contributors"></a>
+<a href="https://github.com/dev-centr/private-docs-login/network/members"><img src="https://img.shields.io/github/forks/dev-centr/private-docs-login.svg?style=for-the-badge" alt="Forks"></a>
+<a href="https://github.com/dev-centr/private-docs-login/stargazers"><img src="https://img.shields.io/github/stars/dev-centr/private-docs-login.svg?style=for-the-badge" alt="Stars"></a>
+<a href="https://github.com/dev-centr/private-docs-login/issues"><img src="https://img.shields.io/github/issues/dev-centr/private-docs-login.svg?style=for-the-badge" alt="Issues"></a>
 <br />
 <h3 align="center">private-docs-login</h3>
 <p align="center">
 OpenID Connect issuer for private docs. One GitHub App. GitLab groups opt in by membership.<br />
 <a href="https://docs.antora-supplemental.org/home/how-to/private-docs-login/"><strong>Explore the docs »</strong></a><br /><br />
-<a href="https://github.com/antora-supplemental/private-docs-login/blob/main/docs/how-to.adoc">How to run it</a>
+<a href="https://github.com/dev-centr/private-docs-login/blob/main/docs/how-to.adoc">How to run it</a>
 &middot;
-<a href="https://github.com/antora-supplemental/private-docs-login/issues">Report Bug</a>
+<a href="https://github.com/dev-centr/private-docs-login/issues">Report Bug</a>
 </p>
 </div>
 ++++
 endif::[]
 
 ifndef::env-github[]
-image:https://img.shields.io/github/contributors/antora-supplemental/private-docs-login.svg?style=for-the-badge[Contributors,link=https://github.com/antora-supplemental/private-docs-login/graphs/contributors]
-image:https://img.shields.io/github/forks/antora-supplemental/private-docs-login.svg?style=for-the-badge[Forks,link=https://github.com/antora-supplemental/private-docs-login/network/members]
-image:https://img.shields.io/github/stars/antora-supplemental/private-docs-login.svg?style=for-the-badge[Stars,link=https://github.com/antora-supplemental/private-docs-login/stargazers]
-image:https://img.shields.io/github/issues/antora-supplemental/private-docs-login.svg?style=for-the-badge[Issues,link=https://github.com/antora-supplemental/private-docs-login/issues]
+image:https://img.shields.io/github/contributors/dev-centr/private-docs-login.svg?style=for-the-badge[Contributors,link=https://github.com/dev-centr/private-docs-login/graphs/contributors]
+image:https://img.shields.io/github/forks/dev-centr/private-docs-login.svg?style=for-the-badge[Forks,link=https://github.com/dev-centr/private-docs-login/network/members]
+image:https://img.shields.io/github/stars/dev-centr/private-docs-login.svg?style=for-the-badge[Stars,link=https://github.com/dev-centr/private-docs-login/stargazers]
+image:https://img.shields.io/github/issues/dev-centr/private-docs-login.svg?style=for-the-badge[Issues,link=https://github.com/dev-centr/private-docs-login/issues]
 
 = private-docs-login
 
@@ -37,7 +37,7 @@ OpenID Connect issuer for private docs. One GitHub App. GitLab groups opt in by 
 
 link:https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Explore the docs] ·
 link:docs/how-to.adoc[How to run it] ·
-link:https://github.com/antora-supplemental/private-docs-login/issues[Report Bug]
+link:https://github.com/dev-centr/private-docs-login/issues[Report Bug]
 endif::[]
 
 ++++
@@ -176,7 +176,7 @@ Mozilla Public License 2.0. See link:LICENSE[LICENSE].
 
 Antora Supplemental - support@antora-supplemental.org
 
-* Project: https://github.com/antora-supplemental/private-docs-login
+* Project: https://github.com/dev-centr/private-docs-login
 * Docs: https://docs.antora-supplemental.org/home/how-to/private-docs-login/
 
 ++++
