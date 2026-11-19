@@ -8,7 +8,7 @@ import { dirname, join } from "node:path"
 import { createIssuer } from "../src/issuer.mjs"
 import { createGithubForge, githubManifest, organizationsFromInstallations } from "../src/github.mjs"
 import { createGitlabForge, groupsFromMemberLists } from "../src/gitlab.mjs"
-import { describeConfig, loadRuntimeConfig, lookupEnv } from "../src/config.mjs"
+import { describeConfig, loadRuntimeConfig } from "../src/config.mjs"
 import { parseSdl } from "../src/sdl.mjs"
 import { exchangeManifestCode, manifestForm } from "../src/manifest.mjs"
 import { gitlabSetupText } from "../src/gitlab-setup.mjs"
@@ -360,36 +360,13 @@ test("GitLab setup names the app, the scope, and the opt-in user", async () => {
   assert.match(text, /No GitLab group named antora-supplemental/)
 })
 
-test("lookupEnv prefers the requested name and falls back to the other prefix", () => {
-  const env = {
-    PRIVATE_DOCS_LOGIN_LISTEN: "new",
-    ANTORA_PRIVATE_DOCS_LISTEN: "old",
-    ANTORA_PRIVATE_DOCS_CONFIG: "legacy-only.sdl",
-  }
-  assert.equal(lookupEnv(env, "PRIVATE_DOCS_LOGIN_LISTEN"), "new")
-  assert.equal(lookupEnv(env, "ANTORA_PRIVATE_DOCS_LISTEN"), "old")
-  assert.equal(lookupEnv(env, "PRIVATE_DOCS_LOGIN_CONFIG"), "legacy-only.sdl")
-  assert.equal(lookupEnv({ PRIVATE_DOCS_LOGIN_LISTEN: "from-new" }, "ANTORA_PRIVATE_DOCS_LISTEN"), "from-new")
-})
-
-test("manifest exchange expects the app name Private Docs Login", async () => {
-  await assert.rejects(
-    exchangeManifestCode(async () => Response.json({ name: "Other App" }), "code"),
-    /not Private Docs Login/,
-  )
-  const body = await exchangeManifestCode(async () => Response.json({ name: "Private Docs Login", id: 7 }), "code")
-  assert.equal(body.name, "Private Docs Login")
-  assert.equal(body.id, 7)
-})
-
-test("the previous environment prefix still loads when the config names the new one", async () => {
+test("the old environment prefix does not satisfy PRIVATE_DOCS_LOGIN_ names", async () => {
   const { privateKey } = generateKeyPairSync("rsa", { modulusLength: 2048 })
   const pem = privateKey.export({ type: "pkcs8", format: "pem" })
   const dir = mkdtempSync(join(tmpdir(), "private-docs-login-"))
   const pemPath = join(dir, "signing.pem")
   writeFileSync(pemPath, pem)
-  try {
-    const raw = parseSdl(`
+  const raw = parseSdl(`
 issuer "https://login.example.com"
 signing-key {
   pem-path-env "PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH"
@@ -402,12 +379,23 @@ github {
   client-secret-env "PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_SECRET"
 }
 `)
+  try {
+    await assert.rejects(
+      loadRuntimeConfig(raw, {
+        ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH: pemPath,
+        ANTORA_PRIVATE_DOCS_LISTEN: "10.0.0.1:4190",
+        ANTORA_PRIVATE_DOCS_GITHUB_APP_ID: "42",
+        ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_ID: "cid",
+        ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_SECRET: "csecret",
+      }),
+      /PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH/,
+    )
     const runtime = await loadRuntimeConfig(raw, {
-      ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH: pemPath,
-      ANTORA_PRIVATE_DOCS_LISTEN: "10.0.0.1:4190",
-      ANTORA_PRIVATE_DOCS_GITHUB_APP_ID: "42",
-      ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_ID: "cid",
-      ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_SECRET: "csecret",
+      PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH: pemPath,
+      PRIVATE_DOCS_LOGIN_LISTEN: "10.0.0.1:4190",
+      PRIVATE_DOCS_LOGIN_GITHUB_APP_ID: "42",
+      PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_ID: "cid",
+      PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_SECRET: "csecret",
     })
     assert.equal(runtime.listenHost, "10.0.0.1")
     assert.equal(runtime.listenPort, 4190)
@@ -417,4 +405,14 @@ github {
   } finally {
     rmSync(dir, { recursive: true, force: true })
   }
+})
+
+test("manifest exchange expects the app name Private Docs Login", async () => {
+  await assert.rejects(
+    exchangeManifestCode(async () => Response.json({ name: "Other App" }), "code"),
+    /not Private Docs Login/,
+  )
+  const body = await exchangeManifestCode(async () => Response.json({ name: "Private Docs Login", id: 7 }), "code")
+  assert.equal(body.name, "Private Docs Login")
+  assert.equal(body.id, 7)
 })

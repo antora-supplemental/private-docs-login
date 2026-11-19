@@ -52,20 +52,48 @@ toc::[]
 == About
 
 A login provider for OpenID Connect-enabled private sites.
-It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.
-It brokers GitHub and GitLab membership for private documentation sites.
-The service is an OpenID Connect issuer a relying party can use.
+It lets GitHub and GitLab organization members sign in to private documentation when their organization has installed the app.
+It brokers GitHub and GitLab membership for those sites.
+The service is an OpenID Connect issuer a documentation site can use.
 GitHub organizations opt in by installing the GitHub App named Private Docs Login.
 GitLab groups opt in by inviting a configured user, because GitLab does not install apps the way GitHub does.
 Cloudflare Access can be a client. It is not the required host.
 
 == What this is for
 
-The sign-in mechanism is general OpenID Connect: a relying party sends the reader to this issuer, and the token names the organizations or groups that opted in.
+The sign-in mechanism is general OpenID Connect: a documentation site sends the reader to this issuer, and the token names the organizations or groups that opted in.
 This distribution is for teams who publish private documentation (member-gated docs hubs, handbooks, and internal guides) and want to gate it on GitHub or GitLab organization membership.
 It ships as its own product, with one install story, one GitHub App, and setup written for documentation sites, because that job is narrower than a generic identity provider.
 The documentation language stays for that reason.
-An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup, not the only one, and this issuer does not gate arbitrary web applications.
+An Antora site behind Cloudflare Access, or another OpenID Connect client, is one common setup, not the only one, and this issuer does not gate arbitrary web applications.
+
+++++
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+++++
+
+== Install the published app
+
+An organization owner installs the published GitHub App on the organization.
+The app is named Private Docs Login.
+That installation is how the organization opts in.
+GitHub Marketplace is the public catalog for that app when GitHub lists it.
+The same opt-in is the organization's install of the app.
+You do not clone this repository, and you do not run `private-docs-login`, to install it.
+
+A GitLab group owner invites the user the issuer is configured to recognize.
+The example name is `private-docs-login`.
+Guest access is enough.
+A group that has not invited that user is not named in the token.
+GitLab does not install apps onto other groups.
+
+The person who runs the documentation site then registers that site with the issuer.
+The site sends the reader to the issuer and admits them only when the token names this organization.
+
+Antora does not have a playbook extension for this login.
+An Antora site is static.
+The usual client in front of it is Cloudflare Access.
+The issuer URLs and the groups claim are in link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
+The hostname and Allow policy steps are in link:https://docs.devcentr.org/general-knowledge/how-to/cloudflare-access-static-site/[Cloudflare Access for static sites].
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -88,7 +116,7 @@ Members of one organization are not admitted to another organization's documenta
 The GitHub App has one callback, on the issuer.
 Customer documentation URLs are not entered in the GitHub App settings.
 
-A private documentation site is a relying-party client of the issuer.
+A private documentation site is a client of the issuer.
 The redirect URI is registered with the issuer.
 That list is not the GitHub App.
 
@@ -101,30 +129,33 @@ That organization does not register a new GitHub App, and does not fork this rep
 
 == Run your own issuer
 
-An organization cannot install the publisher's marketplace app and point it at an issuer they host.
-GitHub only calls the callback URL registered on the app, which is the publisher's host.
+An organization administrator may need to run their own issuer when the organization's policies require sign-in to stay on the organization's own host.
+The reasons are trust, privacy, residency, the organization's own domain, GitHub Enterprise Server, or claims the published issuer does not issue.
 
-Hosting an issuer means hosting a GitHub App for that issuer.
+A Marketplace install of the published app cannot be pointed at an issuer the organization hosts.
+GitHub only calls the callback URL registered on that app, which is the publisher's host.
+Hosting an issuer means registering a separate GitHub App for that issuer.
 
-The reusable distribution is: the publisher runs the issuer, the organization installs the app, and the organization registers its documentation site as a client.
+The usual arrangement is: the publisher runs the issuer, the organization installs the app, and the organization registers its documentation site as a client.
 
-Run your own issuer when you do not want reader logins, membership checks, or client registration to pass through the publisher.
-The reasons are trust, privacy, availability, data residency, or a policy that the identity provider must be yours.
-Run your own when the GitHub callback has to be on your domain.
-Run your own for GitHub Enterprise Server, where this marketplace app cannot be installed.
-Run your own when you need to change claims, forges, or token rules yourself.
+You do not need your own issuer when you trust the publisher's issuer, and organization membership on your own documentation site is enough.
 If the publisher's issuer is down, every private documentation site that depends on it cannot sign readers in.
-
-You do not need your own issuer when you trust the publisher's issuer, and organization membership gating your own documentation site is enough.
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 ++++
 
-== Start
+== Host the issuer
+
+These commands run in a checkout of this repository, on a machine you operate, after you have decided to host the issuer.
+They start that process, create that issuer's GitHub App, and print the GitLab application fields.
+They are not how an organization installs the published app.
 
 Copy `config/issuer.example.sdl` to `config/issuer.sdl`.
-Point `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH` at a PKCS#8 PEM.
+The issuer signs each login token with a private key that stays on this machine.
+You create that key file.
+`PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH` is the path to the file.
+The file format is a PKCS#8 PEM.
 The other names are in link:https://docs.devcentr.org/tools/private-docs-login/environment-variables/[Environment variables].
 
 The command name is `private-docs-login` (package `@dev-centr/private-docs-login`, file `bin/private-docs-login.mjs`).
@@ -132,30 +163,30 @@ From this checkout, `npm link` puts that command on your PATH.
 
 [source,shell]
 ----
+openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out signing.pem
 private-docs-login serve --config config/issuer.sdl
 ----
 
-This window shows the server.
-The listen line prints the address.
+This window shows the process.
+The listen line is the address.
 Ctrl+C stops it.
 
-Create the GitHub App (the browser approval is the remaining step):
+Create this issuer's GitHub App.
+The browser approval is the remaining step:
 
 [source,shell]
 ----
 private-docs-login github-manifest --config config/issuer.sdl
 ----
 
-Print the GitLab application URL and fields:
+Print this issuer's GitLab application URL and fields:
 
 [source,shell]
 ----
 private-docs-login gitlab-setup --config config/issuer.sdl
 ----
 
-The task write-up is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
-The playbook serves that URL.
-It is published on the next Dev-Centr docs build.
+The steps for the published app, the documentation site, and a host you operate are in link:https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
 
 ++++
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

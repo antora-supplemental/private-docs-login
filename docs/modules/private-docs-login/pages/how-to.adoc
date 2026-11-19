@@ -1,7 +1,7 @@
 = How to run it
-:description: A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.
-:page-audience: Site operators
-:page-usage-context: How-to on the Dev-Centr docs hub for running the issuer, installing the shared GitHub App, opting a GitLab group in, and pointing a relying party at it
+:description: A login provider for private documentation sites that use OpenID Connect. An organization installs the published GitHub App. Hosting the issuer is a separate job.
+:page-audience: Organization administrators
+:page-usage-context: How-to on the Dev-Centr docs hub for installing the published GitHub App, pointing a documentation site at the issuer, and hosting an issuer
 :page-orig-author: Grok 4.7 on behalf of Ryan Johnson
 :page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
 :page-last-edited: 2026-11-19
@@ -17,26 +17,64 @@ Last updated:: {page-last-edited}
 ****
 endif::[]
 
+An organization administrator installs the published GitHub App so members of that organization can sign in to private documentation.
+Someone who hosts the issuer uses the later sections, on a checkout of this repository or on a host they operate.
+Those are different jobs.
+
 A login provider for OpenID Connect-enabled private sites.
-It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.
+It lets GitHub and GitLab organization members sign in to private resources when their organization has installed the app.
 It brokers GitHub and GitLab membership for private documentation sites.
-GitHub organizations opt in by installing one GitHub App.
 The app an owner approves is named Private Docs Login.
 GitLab groups opt in by inviting one configured user.
-The listen address and the public issuer URL come from config.
-
-These steps run in a checkout of this repository.
-The command name is `private-docs-login`.
-That is the package bin, and the file is `bin/private-docs-login.mjs`.
-From the checkout, `npm link` puts `private-docs-login` on your PATH.
+The listen address and the public issuer URL come from config, and only the person hosting the issuer sets them.
 
 == What this is for
 
-The sign-in mechanism is general OpenID Connect: a relying party sends the reader to this issuer, and the token names the organizations or groups that opted in.
+The sign-in mechanism is general OpenID Connect: a documentation site sends the reader to this issuer, and the token names the organizations or groups that opted in.
 This distribution is for teams who publish private documentation (member-gated docs hubs, handbooks, and internal guides) and want to gate it on GitHub or GitLab organization membership.
 It ships as its own product, with one install story, one GitHub App, and setup written for documentation sites, because that job is narrower than a generic identity provider.
 The documentation language stays for that reason.
-An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup, not the only one, and this issuer does not gate arbitrary web applications.
+An Antora site behind Cloudflare Access, or another OpenID Connect client, is one common setup, not the only one, and this issuer does not gate arbitrary web applications.
+
+== Install the published app
+
+An organization owner installs the published GitHub App on the organization.
+The app is named Private Docs Login.
+That installation is how the organization opts in.
+GitHub Marketplace is the public catalog for that app when GitHub lists it.
+The same opt-in is the organization's install of the app.
+You do not clone this repository, and you do not run `private-docs-login`, to install it.
+
+Organization members, read, is the only permission.
+An organization that has not installed the app is not in the token.
+
+GitHub's install screen shows the app name, the owner, the permissions, and a short description.
+It does not show this repository.
+After install, GitHub opens the issuer's setup page.
+That page says the installation lets this issuer name the organization's members in tokens for private documentation sites registered with the issuer, that each site still checks for its own organization, and that membership checks pass through the publisher's host.
+It also says an Antora site behind Cloudflare Access, or another OpenID Connect client, is one common setup.
+
+A reader stays on this issuer until they continue.
+That page states the same limit.
+If they do not want sign-in to pass through the publisher, it tells them to stop and give the message, plus this article, to their organization administrator.
+
+A GitLab group owner invites the user the issuer is configured to recognize.
+The example name is `private-docs-login`.
+Guest access is enough.
+A group that has not invited that user is not named in the token.
+GitLab does not install apps onto other groups.
+Zero opted-in groups is a refusal page, not a token.
+
+== Point the documentation site at the issuer
+
+The person who runs the documentation site registers that site with the issuer.
+The site is a client: it has an id, a secret, and exact redirect URLs.
+The issuer URLs and the groups claim are in <<relying-parties>>.
+
+Antora does not have a playbook extension for this login.
+An Antora site is static.
+The usual client in front of it is Cloudflare Access.
+The hostname and Allow policy steps are in https://docs.devcentr.org/general-knowledge/how-to/cloudflare-access-static-site/[Cloudflare Access for static sites].
 
 == How login works
 
@@ -55,7 +93,7 @@ Members of one organization are not admitted to another organization's documenta
 The GitHub App has one callback, on the issuer.
 Customer documentation URLs are not entered in the GitHub App settings.
 
-A private documentation site is a relying-party client of the issuer.
+A private documentation site is a client of the issuer.
 The redirect URI is registered with the issuer.
 That list is not the GitHub App.
 
@@ -64,24 +102,30 @@ That organization does not register a new GitHub App, and does not fork this rep
 
 == Run your own issuer
 
-An organization cannot install the publisher's marketplace app and point it at an issuer they host.
-GitHub only calls the callback URL registered on the app, which is the publisher's host.
+An organization administrator may need to run their own issuer when the organization's policies require sign-in to stay on the organization's own host.
+The reasons are trust, privacy, residency, the organization's own domain, GitHub Enterprise Server, or claims the published issuer does not issue.
 
-Hosting an issuer means hosting a GitHub App for that issuer.
+A Marketplace install of the published app cannot be pointed at an issuer the organization hosts.
+GitHub only calls the callback URL registered on that app, which is the publisher's host.
+Hosting an issuer means registering a separate GitHub App for that issuer.
 
-The reusable distribution is: the publisher runs the issuer, the organization installs the app, and the organization registers its documentation site as a client.
+The usual arrangement is: the publisher runs the issuer, the organization installs the app, and the organization registers its documentation site as a client.
 
-Run your own issuer when you do not want reader logins, membership checks, or client registration to pass through the publisher.
-The reasons are trust, privacy, availability, data residency, or a policy that the identity provider must be yours.
-Run your own when the GitHub callback has to be on your domain.
-Run your own for GitHub Enterprise Server, where this marketplace app cannot be installed.
-Run your own when you need to change claims, forges, or token rules yourself.
+You do not need your own issuer when you trust the publisher's issuer, and organization membership on your own documentation site is enough.
 If the publisher's issuer is down, every private documentation site that depends on it cannot sign readers in.
 
-You do not need your own issuer when you trust the publisher's issuer, and organization membership gating your own documentation site is enough.
+== Host the issuer
+
+These commands run in a checkout of this repository, on a machine you operate, after you have decided to host the issuer.
+The command name is `private-docs-login`.
+That is the package bin, and the file is `bin/private-docs-login.mjs`.
+From the checkout, `npm link` puts `private-docs-login` on your PATH.
 
 Copy `config/issuer.example.sdl` to `config/issuer.sdl`.
-Generate a signing PEM and set `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH`.
+The issuer signs each login token with a private key that stays on this machine.
+You create that key file.
+`PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH` is the path to the file.
+The file format is a PKCS#8 PEM.
 Other names are in xref:environment-variables.adoc[Environment variables].
 
 [source,shell]
@@ -94,7 +138,11 @@ This window shows the process.
 The listen line is the address.
 Ctrl+C stops it.
 
-== GitHub App
+== GitHub App for an issuer you host
+
+This section is for the person hosting the issuer.
+An organization that uses the published app installs that app.
+That organization does not run this command.
 
 [source,shell]
 ----
@@ -111,17 +159,11 @@ The command does not print the client secret or the private key.
 Organization members, read, is the only permission.
 An organization that has not installed the app is not in the token.
 
-GitHub's install dialog shows the app name, the owner, the permissions, and the short description on the manifest.
-It does not show this repository.
-After install, GitHub opens `{issuer}/github/setup`.
-That page says the installation lets this issuer name the organization's members in tokens for private documentation sites registered with the issuer, that each site still checks for its own organization, and that membership checks pass through the publisher's host.
-It also says an Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup.
+== GitLab application for an issuer you host
 
-A reader stays on this issuer until they continue.
-That page states the same limit.
-If they do not want sign-in to pass through the publisher, it tells them to stop and give the message, plus the docs link, to their organization admin.
-
-== GitLab application
+This section is for the person hosting the issuer.
+A group that only wants to opt in invites the configured user.
+That group does not create this application.
 
 [source,shell]
 ----
@@ -135,16 +177,12 @@ On gitlab.com the group `antora-supplemental` is not there yet.
 After it exists, the settings page is `https://gitlab.com/groups/antora-supplemental/-/settings/applications`.
 Redirect URI is `{issuer}/gitlab/callback`.
 
-Opt-in is an invite of `opt-in-username` (example `private-docs-login`) to the group.
-Guest is enough.
-Groups that have not invited that user are excluded.
-Zero opted-in groups is a refusal page, not a token.
-
+[[relying-parties]]
 == Relying parties
 
-A `client` block is a relying party: id, `secret-env`, and exact `redirect` values.
+A `client` block is a documentation site registered with the issuer: id, `secret-env`, and exact `redirect` values.
 Cloudflare Access is the example client `cloudflare-access`, generic OpenID Connect.
-An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup.
+An Antora site behind Cloudflare Access, or another OpenID Connect client, is one common setup.
 
 * Auth URL `{issuer}/authorize`
 * Token URL `{issuer}/token`

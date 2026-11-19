@@ -37,10 +37,10 @@ Empty names in `.env.example` match this table.
 | Local process environment.
 
 | `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH`
-| PEM PKCS#8 file that signs ID tokens. The example config names this variable from `signing-key.pem-path-env`.
+| Path to the issuer's private signing key. The person who hosts the issuer creates the file on that machine. The file format is PKCS#8 PEM. The example config names this variable from `signing-key.pem-path-env`.
 | Yes
 | The process refuses to start.
-| Generate locally with `openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048`. Do not commit the file.
+| Create the file on the issuer host with `openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048`. Do not commit it. Set the variable to that file's path.
 
 | `PRIVATE_DOCS_LOGIN_GITHUB_APP_ID`
 | Numeric id of the GitHub App named Private Docs Login.

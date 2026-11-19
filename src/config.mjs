@@ -16,25 +16,8 @@ export function describeConfig(raw) {
   }
 }
 
-export const CURRENT_ENV_PREFIX = "PRIVATE_DOCS_LOGIN_"
-export const LEGACY_ENV_PREFIX = "ANTORA_PRIVATE_DOCS_"
-
-export function lookupEnv(env, name) {
-  if (!name) return undefined
-  const direct = env[name]
-  if (direct) return direct
-  let alias
-  if (name.startsWith(CURRENT_ENV_PREFIX)) {
-    alias = LEGACY_ENV_PREFIX + name.slice(CURRENT_ENV_PREFIX.length)
-  } else if (name.startsWith(LEGACY_ENV_PREFIX)) {
-    alias = CURRENT_ENV_PREFIX + name.slice(LEGACY_ENV_PREFIX.length)
-  }
-  if (!alias) return undefined
-  return env[alias] || undefined
-}
-
 function envValue(env, name) {
-  const value = lookupEnv(env, name)
+  const value = env[name]
   if (!value) throw new Error(`Set environment variable ${name}`)
   return value
 }
@@ -69,7 +52,7 @@ export async function loadRuntimeConfig(raw, env) {
     clientId: envValue(env, instance["client-id-env"]),
     clientSecret: envValue(env, instance["client-secret-env"]),
   }))
-  const listenOverride = lookupEnv(env, "PRIVATE_DOCS_LOGIN_LISTEN")
+  const listenOverride = env.PRIVATE_DOCS_LOGIN_LISTEN
   let host = listen.host || "127.0.0.1"
   let port = Number(listen.port || 4180)
   if (listenOverride) {

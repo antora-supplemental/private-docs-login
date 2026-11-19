@@ -1,0 +1,35 @@
+= 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-audience: Maintainers and readers tracking functional history of this component
+:page-usage-context: Changelog detail for who installs the app and who hosts the issuer
+:page-orig-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+== Install is the GitHub App
+
+The README and the how-to open on the organization owner who installs the published GitHub App, Private Docs Login.
+GitHub Marketplace is the public catalog for that app when GitHub lists it.
+The organization's install of the app is the same opt-in.
+Cloning this repository is not that step.
+
+A GitLab group owner invites the configured user.
+The example name is `private-docs-login`.
+
+The person who runs the documentation site registers that site with the issuer.
+Antora has no playbook extension for this login.
+An Antora site is static.
+The usual client is Cloudflare Access.
+Hostname and Allow policy steps are in the Cloudflare Access guide for static sites.
+
+Running `private-docs-login` is the section for a person who has decided to host the issuer.
+Those commands run in a checkout of this repository, on a machine that person operates.
+They create the signing key, start the process, register that issuer's own GitHub App, and print that issuer's GitLab application fields.
+
+The signing-key step says the file is the issuer's private signing key, that the person hosting the issuer creates it, and that `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH` is the path to that file.
+The file format is PKCS#8 PEM.
+
+An organization administrator may host an issuer when policy requires sign-in to stay on the organization's own host.
+A Marketplace install of the published app cannot be pointed at an issuer the customer hosts.
+That issuer uses its own GitHub App.

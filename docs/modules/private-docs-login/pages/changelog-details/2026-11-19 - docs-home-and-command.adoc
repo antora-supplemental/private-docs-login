@@ -7,9 +7,8 @@
 
 == Docs home and run command
 
-The how-to for this login provider is the page the Dev-Centr docs playbook serves at https://docs.devcentr.org/tools/private-docs-login/how-to/ .
+The how-to is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
 This repository is the content source.
-The page is published on the next hub build.
 The Antora Supplemental how-to refers to that page.
 
 The README and the how-to named the run command that was current when this note was written.

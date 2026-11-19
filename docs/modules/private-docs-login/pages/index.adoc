@@ -22,7 +22,7 @@ GitHub and GitLab organization members sign in through their org's installation.
 It brokers membership for those sites.
 An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one common setup.
 
-xref:how-to.adoc[How to run it] is the login contract, when to run your own issuer, and the GitHub and GitLab setup.
+xref:how-to.adoc[How to run it] is the published article: install the GitHub App, point a documentation site at the issuer, and host an issuer when policy requires it.
 
 xref:environment-variables.adoc[Environment variables] names the settings.
 Values stay out of git.

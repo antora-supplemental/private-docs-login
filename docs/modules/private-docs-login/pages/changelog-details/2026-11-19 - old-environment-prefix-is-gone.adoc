@@ -1,0 +1,17 @@
+= 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-audience: Maintainers and readers tracking functional history of this component
+:page-usage-context: Changelog detail for removing the previous environment prefix
+:page-orig-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+== Old environment prefix is gone
+
+The process reads environment names that start with `PRIVATE_DOCS_LOGIN_` only.
+A value set under `ANTORA_PRIVATE_DOCS_` is ignored.
+The app is new and has no deployments that depend on the previous prefix.
+
+The documented names are unchanged.
+`.env.example` and the environment variable page already list `PRIVATE_DOCS_LOGIN_` only.

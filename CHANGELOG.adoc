@@ -1,6 +1,5 @@
 = Changelog
 
 The changelog is published at https://docs.devcentr.org/tools/private-docs-login/changelog/[Changelog].
-The playbook serves that URL.
 
 Source: link:docs/modules/private-docs-login/pages/changelog.adoc[changelog.adoc].

@@ -1,7 +1,5 @@
 = How to run it
 
-The how-to is published at https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
-The playbook serves that URL.
-It is published on the next Dev-Centr docs build.
+The public article is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].
 
 Source: link:modules/private-docs-login/pages/how-to.adoc[how-to.adoc].

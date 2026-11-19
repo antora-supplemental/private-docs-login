@@ -21,8 +21,10 @@ The previous package name was not on the npm registry.
 
 Documented environment names use the `PRIVATE_DOCS_LOGIN_` prefix.
 `.env.example` and the environment variable page list those names.
-If a deployment still sets `ANTORA_PRIVATE_DOCS_` with the same suffix, the process uses that value when the new name is unset.
-The documented names are the new ones only.
+This change still read `ANTORA_PRIVATE_DOCS_` when the new name was unset.
+A later change the same day stops reading that prefix.
+See xref:changelog-details/2026-11-19 - old-environment-prefix-is-gone.adoc[Old environment prefix is gone].
+The documented names were already `PRIVATE_DOCS_LOGIN_` only.
 
 The GitHub App manifest, the setup pages, and the GitLab setup text use the name Private Docs Login.
 The manifest exchange checks that GitHub returned that name.

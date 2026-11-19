@@ -20,17 +20,29 @@ endif::[]
 
 == 2026-11-19
 
+=== Install is the GitHub App
+
+* The README and the how-to start with an organization owner installing the published GitHub App. Running `private-docs-login` is for a person hosting the issuer, from a checkout of this repository.
+* The signing-key step says the file is the issuer's private signing key, that the person hosting the issuer creates it, and that `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH` is the path to that file.
+* Antora has no playbook extension for this login. A static Antora site uses an OpenID Connect client. The hostname guide that exists is Cloudflare Access for static sites.
+* Detail: xref:changelog-details/2026-11-19 - install-is-the-github-app.adoc[Install is the GitHub App].
+
+=== Old environment prefix is gone
+
+* The process reads `PRIVATE_DOCS_LOGIN_` only. `ANTORA_PRIVATE_DOCS_` is not consulted.
+* Detail: xref:changelog-details/2026-11-19 - old-environment-prefix-is-gone.adoc[Old environment prefix is gone].
+
 === Private Docs Login is the name
 
 * The command is `private-docs-login` (`bin/private-docs-login.mjs`). The npm package name is `@dev-centr/private-docs-login`. Environment names use the `PRIVATE_DOCS_LOGIN_` prefix. The GitHub App and the GitLab application an owner approves are named Private Docs Login.
-* A process that still has the previous `ANTORA_PRIVATE_DOCS_` prefix set is accepted. The documented names are the new ones.
+* At this point the process still accepted `ANTORA_PRIVATE_DOCS_` when the new name was unset. A later change the same day stops reading that prefix. The documented names were already the new ones.
 * The GitHub App already registered on github.com keeps its previous display name until someone renames it in that app's GitHub settings. This repository does not call GitHub to rename it.
 * Publishing `@dev-centr/private-docs-login` on npm is a later step. The package stays private until then.
 * Detail: xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name].
 
 === Docs home and run command
 
-* The how-to is the Dev-Centr docs page the playbook serves at https://docs.devcentr.org/tools/private-docs-login/how-to/ . This repository is the content source. The page is published on the next hub build.
+* The how-to is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it]. This repository is the content source.
 * Sign-in and setup pages link to that how-to.
 * Detail: xref:changelog-details/2026-11-19 - docs-home-and-command.adoc[Docs home and run command].
 
@@ -85,6 +97,8 @@ endif::[]
 
 == History and reports
 
+* 2026-11-19, xref:changelog-details/2026-11-19 - install-is-the-github-app.adoc[Install is the GitHub App]: who installs the published app, who hosts the issuer, and where an Antora site is wired.
+* 2026-11-19, xref:changelog-details/2026-11-19 - old-environment-prefix-is-gone.adoc[Old environment prefix is gone]: `ANTORA_PRIVATE_DOCS_` is no longer read.
 * 2026-11-19, xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name]: the command, the npm package, the environment prefix, and the GitHub App display name.
 * 2026-11-19, xref:changelog-details/2026-11-19 - docs-home-and-command.adoc[Docs home and run command]: the how-to is published from this repository on the Dev-Centr docs site.
 * 2026-11-19, xref:changelog-details/2026-11-19 - support-contact.adoc[Support contact is DevCentr]: the README contact names DevCentr.org instead of Antora Supplemental.

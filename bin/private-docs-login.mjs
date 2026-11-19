@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
-import { describeConfig, lookupEnv, readConfigFile } from "../src/config.mjs"
+import { describeConfig, readConfigFile } from "../src/config.mjs"
 import { asList } from "../src/sdl.mjs"
 import { listenIssuer } from "../src/serve.mjs"
 import { startManifestServer, writeGithubCredentials } from "../src/manifest.mjs"
@@ -15,9 +15,12 @@ It is an OpenID Connect issuer. It brokers GitHub and GitLab membership for thos
 GitHub organizations opt in by installing one GitHub App. GitLab groups opt in by inviting a configured user. The ID token lists those organizations and groups.
 Antora is one example client.
 
+This command runs in a checkout of this repository, on a machine that hosts the issuer.
+Installing the published GitHub App on an organization does not use this command.
+
 Start the issuer in this window:
   private-docs-login serve --config config/issuer.sdl
-  The listen line is the address. Ctrl+C stops this process.
+  This window shows the process. The listen line is the address. Ctrl+C stops it.
 
 Create the GitHub App (one approval in the browser):
   private-docs-login github-manifest --config config/issuer.sdl
@@ -45,7 +48,7 @@ if (args.includes("--version") || args.includes("-v")) {
 }
 
 const command = args[0]
-const configPath = flag(args, "--config", lookupEnv(process.env, "PRIVATE_DOCS_LOGIN_CONFIG") || "config/issuer.sdl")
+const configPath = flag(args, "--config", process.env.PRIVATE_DOCS_LOGIN_CONFIG || "config/issuer.sdl")
 
 if (command === "serve") {
   const started = await listenIssuer({ configPath, env: process.env })
