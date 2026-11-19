@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs"
 import { createGithubForge } from "./github.mjs"
 import { createGitlabForge } from "./gitlab.mjs"
 import { createIssuer } from "./issuer.mjs"
-import { loadRuntimeConfig, readConfigFile } from "./config.mjs"
+import { loadRuntimeConfig, lookupEnv, readConfigFile } from "./config.mjs"
 
 export function publicJwkFromPem(pem, kid) {
   const jwk = createPublicKey(pem).export({ format: "jwk" })
@@ -18,8 +18,8 @@ export function publicJwkFromPem(pem, kid) {
 export async function listenIssuer({ configPath, env, fetchImpl }) {
   const raw = readConfigFile(configPath)
   const runtime = await loadRuntimeConfig(raw, env)
-  const pemName = (raw["signing-key"] && raw["signing-key"]["pem-path-env"]) || "ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH"
-  const pem = readFileSync(env[pemName], "utf8")
+  const pemName = (raw["signing-key"] && raw["signing-key"]["pem-path-env"]) || "PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH"
+  const pem = readFileSync(lookupEnv(env, pemName), "utf8")
   return listenRuntime(runtime, pem, fetchImpl || globalThis.fetch)
 }
 

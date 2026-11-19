@@ -12,8 +12,8 @@ This repository is the content source.
 The page is published on the next hub build.
 The Antora Supplemental how-to refers to that page.
 
-The README and the how-to run `antora-private-docs`.
-That is the package bin.
-The file is `bin/antora-private-docs.mjs`.
+The README and the how-to named the run command that was current when this note was written.
+A later change the same day renamed that command.
+See xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name].
 
 Sign-in and setup pages link to that how-to.

@@ -1,5 +1,5 @@
 {
-  "name": "@antora-supplemental/private-docs-login",
+  "name": "@dev-centr/private-docs-login",
   "version": "0.1.0",
   "private": true,
   "description": "A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.",
@@ -15,13 +15,13 @@
   },
   "type": "module",
   "bin": {
-    "antora-private-docs": "bin/antora-private-docs.mjs"
+    "private-docs-login": "bin/private-docs-login.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "start": "node bin/antora-private-docs.mjs serve",
+    "start": "node bin/private-docs-login.mjs serve",
     "test": "node --test"
   }
 }

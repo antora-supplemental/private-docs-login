@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
-import { describeConfig, readConfigFile } from "../src/config.mjs"
+import { describeConfig, lookupEnv, readConfigFile } from "../src/config.mjs"
 import { asList } from "../src/sdl.mjs"
 import { listenIssuer } from "../src/serve.mjs"
 import { startManifestServer, writeGithubCredentials } from "../src/manifest.mjs"
@@ -10,18 +10,20 @@ import { gitlabSetupText } from "../src/gitlab-setup.mjs"
 
 const version = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version
 
-const help = `Antora Private Docs Login is an OpenID Connect issuer for private documentation.
+const help = `Private Docs Login is a login provider for private documentation sites.
+It is an OpenID Connect issuer. It brokers GitHub and GitLab membership for those sites.
 GitHub organizations opt in by installing one GitHub App. GitLab groups opt in by inviting a configured user. The ID token lists those organizations and groups.
+Antora is one example client.
 
 Start the issuer in this window:
-  antora-private-docs serve --config config/issuer.sdl
+  private-docs-login serve --config config/issuer.sdl
   The listen line is the address. Ctrl+C stops this process.
 
 Create the GitHub App (one approval in the browser):
-  antora-private-docs github-manifest --config config/issuer.sdl
+  private-docs-login github-manifest --config config/issuer.sdl
 
 Print the GitLab application steps:
-  antora-private-docs gitlab-setup --config config/issuer.sdl
+  private-docs-login gitlab-setup --config config/issuer.sdl
 
 --version prints ${version}. Environment names are listed in docs/modules/private-docs-login/pages/environment-variables.adoc.
 `
@@ -43,12 +45,12 @@ if (args.includes("--version") || args.includes("-v")) {
 }
 
 const command = args[0]
-const configPath = flag(args, "--config", process.env.ANTORA_PRIVATE_DOCS_CONFIG || "config/issuer.sdl")
+const configPath = flag(args, "--config", lookupEnv(process.env, "PRIVATE_DOCS_LOGIN_CONFIG") || "config/issuer.sdl")
 
 if (command === "serve") {
   const started = await listenIssuer({ configPath, env: process.env })
   const address = started.server.address()
-  console.log(`This window is showing Antora Private Docs Login.`)
+  console.log(`This window is showing Private Docs Login.`)
   console.log(`Listen ${started.runtime.listenHost}:${address.port}`)
   console.log(`Issuer ${started.runtime.issuer}`)
   console.log(`Groups claim ${started.runtime.groupsClaim}`)
@@ -76,7 +78,7 @@ if (command === "serve") {
   })
   console.log(`This window is showing the GitHub App setup.`)
   console.log(`Open http://${host}:${port}/`)
-  console.log("The form posts the manifest to GitHub. Approve Antora Private Docs Login there. Ctrl+C stops this process.")
+  console.log("The form posts the manifest to GitHub. Approve Private Docs Login there. Ctrl+C stops this process.")
   void server
 } else if (command === "gitlab-setup") {
   const raw = readConfigFile(configPath)

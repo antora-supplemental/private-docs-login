@@ -16,8 +16,25 @@ export function describeConfig(raw) {
   }
 }
 
+export const CURRENT_ENV_PREFIX = "PRIVATE_DOCS_LOGIN_"
+export const LEGACY_ENV_PREFIX = "ANTORA_PRIVATE_DOCS_"
+
+export function lookupEnv(env, name) {
+  if (!name) return undefined
+  const direct = env[name]
+  if (direct) return direct
+  let alias
+  if (name.startsWith(CURRENT_ENV_PREFIX)) {
+    alias = LEGACY_ENV_PREFIX + name.slice(CURRENT_ENV_PREFIX.length)
+  } else if (name.startsWith(LEGACY_ENV_PREFIX)) {
+    alias = CURRENT_ENV_PREFIX + name.slice(LEGACY_ENV_PREFIX.length)
+  }
+  if (!alias) return undefined
+  return env[alias] || undefined
+}
+
 function envValue(env, name) {
-  const value = env[name]
+  const value = lookupEnv(env, name)
   if (!value) throw new Error(`Set environment variable ${name}`)
   return value
 }
@@ -26,7 +43,7 @@ export async function loadRuntimeConfig(raw, env) {
   const described = describeConfig(raw)
   const listen = raw.listen || {}
   const signing = raw["signing-key"] || {}
-  const pemPath = envValue(env, signing["pem-path-env"] || "ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH")
+  const pemPath = envValue(env, signing["pem-path-env"] || "PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH")
   const privateKey = await importSigningKey(readFileSync(pemPath, "utf8"))
   const clients = asList(raw.client).map((client) => ({
     id: client.id,
@@ -39,7 +56,7 @@ export async function loadRuntimeConfig(raw, env) {
       webBase: raw.github.web || "https://github.com",
       apiBase: raw.github.api || "https://api.github.com",
       owner: raw.github.owner,
-      slug: raw.github.slug || "antora-private-docs-site",
+      slug: raw.github.slug || "private-docs-login",
       appId: envValue(env, raw.github["app-id-env"]),
       clientId: envValue(env, raw.github["client-id-env"]),
       clientSecret: envValue(env, raw.github["client-secret-env"]),
@@ -52,7 +69,7 @@ export async function loadRuntimeConfig(raw, env) {
     clientId: envValue(env, instance["client-id-env"]),
     clientSecret: envValue(env, instance["client-secret-env"]),
   }))
-  const listenOverride = env.ANTORA_PRIVATE_DOCS_LISTEN
+  const listenOverride = lookupEnv(env, "PRIVATE_DOCS_LOGIN_LISTEN")
   let host = listen.host || "127.0.0.1"
   let port = Number(listen.port || 4180)
   if (listenOverride) {
@@ -64,7 +81,7 @@ export async function loadRuntimeConfig(raw, env) {
     ...described,
     listenHost: host,
     listenPort: port,
-    kid: signing.kid || "antora-private-docs-1",
+    kid: signing.kid || "private-docs-login-1",
     privateKey,
     clients,
     github,

@@ -7,7 +7,7 @@ function apiHeaders(token) {
     authorization: `Bearer ${token}`,
     accept: "application/vnd.github+json",
     "x-github-api-version": API_VERSION,
-    "user-agent": "antora-private-docs",
+    "user-agent": "private-docs-login",
   }
 }
 
@@ -64,7 +64,7 @@ export function createGithubForge(options) {
         headers: {
           accept: "application/json",
           "content-type": "application/x-www-form-urlencoded",
-          "user-agent": "antora-private-docs",
+          "user-agent": "private-docs-login",
         },
         body: new URLSearchParams({
           client_id: options.clientId,
@@ -98,7 +98,7 @@ export function githubManifest({ issuer, setupOrigin }) {
   const root = issuer.replace(/\/$/, "")
   const setup = setupOrigin.replace(/\/$/, "")
   return {
-    name: "Antora Private Docs Login",
+    name: "Private Docs Login",
     description: "A login provider for private documentation sites that use OpenID Connect. GitHub and GitLab org members sign in through their org's installation.",
     url: root,
     redirect_url: `${setup}/setup/github/callback`,

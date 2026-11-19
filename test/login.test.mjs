@@ -1,14 +1,16 @@
 import { test } from "node:test"
 import assert from "node:assert/strict"
-import { readFileSync } from "node:fs"
+import { generateKeyPairSync } from "node:crypto"
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs"
+import { tmpdir } from "node:os"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
 import { createIssuer } from "../src/issuer.mjs"
 import { createGithubForge, githubManifest, organizationsFromInstallations } from "../src/github.mjs"
 import { createGitlabForge, groupsFromMemberLists } from "../src/gitlab.mjs"
-import { describeConfig } from "../src/config.mjs"
+import { describeConfig, loadRuntimeConfig, lookupEnv } from "../src/config.mjs"
 import { parseSdl } from "../src/sdl.mjs"
-import { manifestForm } from "../src/manifest.mjs"
+import { exchangeManifestCode, manifestForm } from "../src/manifest.mjs"
 import { gitlabSetupText } from "../src/gitlab-setup.mjs"
 
 const root = dirname(fileURLToPath(import.meta.url))
@@ -153,7 +155,7 @@ test("groups claim is built from this app's organization installations", async (
     appId: "42",
     apiBase: "https://api.github.com",
     webBase: "https://github.com",
-    slug: "antora-private-docs-site",
+    slug: "private-docs-login",
   })
   const app = createIssuer({
     ...material,
@@ -180,13 +182,13 @@ test("a user with zero installations is refused", async () => {
     appId: 42,
     apiBase: "https://api.github.com",
     webBase: "https://github.com",
-    slug: "antora-private-docs-site",
+    slug: "private-docs-login",
   })
   const app = createIssuer({ ...material, issuer: "https://login.example.com", clients: clients(), kid: "test", github })
   const back = await signIn(app, { forge: "github", callbackPath: "/github/callback" })
   assert.equal(back.status, 403)
   const html = await back.text()
-  assert.match(html, /Antora Private Docs Login/)
+  assert.match(html, /Private Docs Login/)
   assert.match(html, /install/i)
   assert.equal(back.headers.get("location"), null)
 })
@@ -205,17 +207,17 @@ test("an opted-in GitLab group is included and a group without the opt-in user i
     { id: 2, full_path: "not/opted" },
   ]
   const members = {
-    1: [{ username: "antora-private-docs" }, { username: "ada" }],
-    2: [{ username: "ada" }, { username: "antora-private-docs-extra" }],
+    1: [{ username: "private-docs-login" }, { username: "ada" }],
+    2: [{ username: "ada" }, { username: "private-docs-login-extra" }],
   }
-  assert.deepEqual(groupsFromMemberLists(groups, members, "antora-private-docs"), ["opted/in"])
+  assert.deepEqual(groupsFromMemberLists(groups, members, "private-docs-login"), ["opted/in"])
   const material = await keys()
   const gitlab = createGitlabForge({
     fetchImpl: gitlabFetch(groups, members),
     instanceUrl: "https://gitlab.example.com",
     clientId: "gid",
     clientSecret: "gsecret",
-    optInUsername: "antora-private-docs",
+    optInUsername: "private-docs-login",
   })
   const app = createIssuer({
     ...material,
@@ -246,7 +248,7 @@ test("zero opted-in GitLab groups is a refusal", async () => {
     instanceUrl: "https://gitlab.example.com",
     clientId: "gid",
     clientSecret: "gsecret",
-    optInUsername: "antora-private-docs",
+    optInUsername: "private-docs-login",
   })
   const app = createIssuer({
     ...material,
@@ -263,7 +265,7 @@ test("zero opted-in GitLab groups is a refusal", async () => {
   assert.equal(back.status, 403)
   const html = await back.text()
   assert.match(html, /not opted in/)
-  assert.match(html, /antora-private-docs/)
+  assert.match(html, /private-docs-login/)
   assert.match(html, /email address does not/)
 })
 
@@ -272,7 +274,7 @@ test("GitHub manifest names the app and asks only for member read", () => {
     issuer: "https://login.example.com",
     setupOrigin: "http://127.0.0.1:8765",
   })
-  assert.equal(manifest.name, "Antora Private Docs Login")
+  assert.equal(manifest.name, "Private Docs Login")
   assert.match(manifest.description, /A login provider for private documentation sites that use OpenID Connect/)
   assert.match(manifest.description, /GitHub and GitLab org members sign in through their org's installation/)
   assert.ok(manifest.description.length <= 350)
@@ -286,7 +288,7 @@ test("GitHub manifest names the app and asks only for member read", () => {
     manifest,
   })
   assert.match(html, /organizations\/antora-supplemental\/settings\/apps\/new/)
-  assert.match(html, /Antora Private Docs Login/)
+  assert.match(html, /Private Docs Login/)
   assert.match(html, /login provider for private documentation sites/)
 })
 
@@ -314,14 +316,14 @@ test("the forge chooser states the shared-issuer limit before GitHub", async () 
     appId: 42,
     apiBase: "https://api.github.com",
     webBase: "https://github.com",
-    slug: "antora-private-docs-site",
+    slug: "private-docs-login",
   })
   const gitlab = createGitlabForge({
     fetchImpl: gitlabFetch([], {}),
     instanceUrl: "https://gitlab.example.com",
     clientId: "gid",
     clientSecret: "gsecret",
-    optInUsername: "antora-private-docs",
+    optInUsername: "private-docs-login",
   })
   const app = createIssuer({
     ...material,
@@ -346,14 +348,73 @@ test("GitLab setup names the app, the scope, and the opt-in user", async () => {
     instance: {
       instanceUrl: "https://gitlab.example.com",
       ownerGroup: "antora-supplemental",
-      optInUsername: "antora-private-docs",
+      optInUsername: "private-docs-login",
     },
     issuer: "https://login.example.com",
     fetchImpl: async () => new Response("missing", { status: 404 }),
   })
   assert.match(text, /https:\/\/gitlab.example.com\/groups\/antora-supplemental\/-\/settings\/applications/)
-  assert.match(text, /Name: Antora Private Docs Login/)
+  assert.match(text, /Name: Private Docs Login/)
   assert.match(text, /read_api/)
-  assert.match(text, /antora-private-docs/)
+  assert.match(text, /private-docs-login/)
   assert.match(text, /No GitLab group named antora-supplemental/)
+})
+
+test("lookupEnv prefers the requested name and falls back to the other prefix", () => {
+  const env = {
+    PRIVATE_DOCS_LOGIN_LISTEN: "new",
+    ANTORA_PRIVATE_DOCS_LISTEN: "old",
+    ANTORA_PRIVATE_DOCS_CONFIG: "legacy-only.sdl",
+  }
+  assert.equal(lookupEnv(env, "PRIVATE_DOCS_LOGIN_LISTEN"), "new")
+  assert.equal(lookupEnv(env, "ANTORA_PRIVATE_DOCS_LISTEN"), "old")
+  assert.equal(lookupEnv(env, "PRIVATE_DOCS_LOGIN_CONFIG"), "legacy-only.sdl")
+  assert.equal(lookupEnv({ PRIVATE_DOCS_LOGIN_LISTEN: "from-new" }, "ANTORA_PRIVATE_DOCS_LISTEN"), "from-new")
+})
+
+test("manifest exchange expects the app name Private Docs Login", async () => {
+  await assert.rejects(
+    exchangeManifestCode(async () => Response.json({ name: "Other App" }), "code"),
+    /not Private Docs Login/,
+  )
+  const body = await exchangeManifestCode(async () => Response.json({ name: "Private Docs Login", id: 7 }), "code")
+  assert.equal(body.name, "Private Docs Login")
+  assert.equal(body.id, 7)
+})
+
+test("the previous environment prefix still loads when the config names the new one", async () => {
+  const { privateKey } = generateKeyPairSync("rsa", { modulusLength: 2048 })
+  const pem = privateKey.export({ type: "pkcs8", format: "pem" })
+  const dir = mkdtempSync(join(tmpdir(), "private-docs-login-"))
+  const pemPath = join(dir, "signing.pem")
+  writeFileSync(pemPath, pem)
+  try {
+    const raw = parseSdl(`
+issuer "https://login.example.com"
+signing-key {
+  pem-path-env "PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH"
+}
+listen { host "127.0.0.1" port 4180 }
+github {
+  owner "example"
+  app-id-env "PRIVATE_DOCS_LOGIN_GITHUB_APP_ID"
+  client-id-env "PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_ID"
+  client-secret-env "PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_SECRET"
+}
+`)
+    const runtime = await loadRuntimeConfig(raw, {
+      ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH: pemPath,
+      ANTORA_PRIVATE_DOCS_LISTEN: "10.0.0.1:4190",
+      ANTORA_PRIVATE_DOCS_GITHUB_APP_ID: "42",
+      ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_ID: "cid",
+      ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_SECRET: "csecret",
+    })
+    assert.equal(runtime.listenHost, "10.0.0.1")
+    assert.equal(runtime.listenPort, 4190)
+    assert.equal(runtime.kid, "private-docs-login-1")
+    assert.equal(runtime.github.slug, "private-docs-login")
+    assert.equal(runtime.github.appId, "42")
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
 })

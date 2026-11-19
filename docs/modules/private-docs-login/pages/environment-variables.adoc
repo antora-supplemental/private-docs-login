@@ -1,5 +1,5 @@
 = Environment variables
-:description: Names for Antora Private Docs Login. Values are never stored in git.
+:description: Names for Private Docs Login. Values are never stored in git.
 :page-audience: Site operators
 :page-usage-context: Reference of environment names on the Dev-Centr docs hub
 :page-orig-author: Grok 4.7 on behalf of Ryan Johnson
@@ -24,61 +24,61 @@ Empty names in `.env.example` match this table.
 |===
 | Variable | Purpose | Required | If unset | Source
 
-| `ANTORA_PRIVATE_DOCS_CONFIG`
+| `PRIVATE_DOCS_LOGIN_CONFIG`
 | Path to the SDL config. The default path is `config/issuer.sdl`.
 | No
 | The serve command looks for `config/issuer.sdl`.
 | Local path. Copy `config/issuer.example.sdl`.
 
-| `ANTORA_PRIVATE_DOCS_LISTEN`
+| `PRIVATE_DOCS_LOGIN_LISTEN`
 | Bind address `host:port`, overriding the config `listen` block.
 | No
 | The config `listen` block is used (`127.0.0.1` and port `4180` in the example).
 | Local process environment.
 
-| `ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH`
+| `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH`
 | PEM PKCS#8 file that signs ID tokens. The example config names this variable from `signing-key.pem-path-env`.
 | Yes
 | The process refuses to start.
 | Generate locally with `openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048`. Do not commit the file.
 
-| `ANTORA_PRIVATE_DOCS_GITHUB_APP_ID`
-| Numeric id of the GitHub App named Antora Private Docs Login.
+| `PRIVATE_DOCS_LOGIN_GITHUB_APP_ID`
+| Numeric id of the GitHub App named Private Docs Login.
 | Yes, when the `github` block is present
 | GitHub sign-in is not available.
 | GitHub organization settings, GitHub Apps, after approving the manifest. The setup command writes it under `var/` and does not print the client secret.
 
-| `ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_ID`
+| `PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_ID`
 | OAuth client id of that GitHub App.
 | Yes, when the `github` block is present
 | GitHub sign-in is not available.
 | Same GitHub App page, or the gitignored `var/github-app.json`.
 
-| `ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_SECRET`
+| `PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_SECRET`
 | OAuth client secret of that GitHub App.
 | Yes, when the `github` block is present
 | GitHub sign-in is not available.
 | Shown once at manifest approval. Stored in gitignored `var/github-app.json`.
 
-| `ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_ID`
-| Application ID of the GitLab application named Antora Private Docs Login.
+| `PRIVATE_DOCS_LOGIN_GITLAB_CLIENT_ID`
+| Application ID of the GitLab application named Private Docs Login.
 | Yes, when a `gitlab` instance block is present
 | That GitLab host is not available for sign-in.
 | GitLab group Settings, Applications. The `gitlab-setup` command prints the URL.
 
-| `ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_SECRET`
+| `PRIVATE_DOCS_LOGIN_GITLAB_CLIENT_SECRET`
 | Secret of that GitLab application.
 | Yes, when a `gitlab` instance block is present
 | That GitLab host is not available for sign-in.
 | GitLab shows it on the application page. Do not commit it.
 
-| `ANTORA_PRIVATE_DOCS_CLIENT_CLOUDFLARE_ACCESS`
+| `PRIVATE_DOCS_LOGIN_CLIENT_CLOUDFLARE_ACCESS`
 | Client secret for the example Cloudflare Access relying party.
 | Yes, if that `client` block is kept
 | Token requests for client id `cloudflare-access` fail.
 | Choose a secret locally and enter the same value in the Access identity provider. The name is the example; a renamed `secret-env` in config uses that name instead.
 
-| `ANTORA_PRIVATE_DOCS_CLIENT_GENERIC`
+| `PRIVATE_DOCS_LOGIN_CLIENT_GENERIC`
 | Client secret for the example generic relying party.
 | Yes, if that `client` block is kept
 | Token requests for client id `generic-rp` fail.

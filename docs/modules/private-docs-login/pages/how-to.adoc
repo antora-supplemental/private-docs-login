@@ -21,14 +21,14 @@ A login provider for OpenID Connect-enabled private sites.
 It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.
 It brokers GitHub and GitLab membership for private documentation sites.
 GitHub organizations opt in by installing one GitHub App.
-The app an owner approves is named Antora Private Docs Login.
+The app an owner approves is named Private Docs Login.
 GitLab groups opt in by inviting one configured user.
 The listen address and the public issuer URL come from config.
 
 These steps run in a checkout of this repository.
-The command name is `antora-private-docs`.
-That is the package bin, and the file is `bin/antora-private-docs.mjs`.
-From the checkout, `npm link` puts `antora-private-docs` on your PATH.
+The command name is `private-docs-login`.
+That is the package bin, and the file is `bin/private-docs-login.mjs`.
+From the checkout, `npm link` puts `private-docs-login` on your PATH.
 
 == What this is for
 
@@ -81,13 +81,13 @@ If the publisher's issuer is down, every private documentation site that depends
 You do not need your own issuer when you trust the publisher's issuer, and organization membership gating your own documentation site is enough.
 
 Copy `config/issuer.example.sdl` to `config/issuer.sdl`.
-Generate a signing PEM and set `ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH`.
+Generate a signing PEM and set `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH`.
 Other names are in xref:environment-variables.adoc[Environment variables].
 
 [source,shell]
 ----
 openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out signing.pem
-antora-private-docs serve --config config/issuer.sdl
+private-docs-login serve --config config/issuer.sdl
 ----
 
 This window shows the process.
@@ -98,12 +98,12 @@ Ctrl+C stops it.
 
 [source,shell]
 ----
-antora-private-docs github-manifest --config config/issuer.sdl
+private-docs-login github-manifest --config config/issuer.sdl
 ----
 
 Open `http://127.0.0.1:8765/`.
 The form posts the manifest to `https://github.com/organizations/antora-supplemental/settings/apps/new`.
-The name on that screen is Antora Private Docs Login.
+The name on that screen is Private Docs Login.
 Approve it there.
 Credentials land in gitignored `var/`.
 The command does not print the client secret or the private key.
@@ -125,17 +125,17 @@ If they do not want sign-in to pass through the publisher, it tells them to stop
 
 [source,shell]
 ----
-antora-private-docs gitlab-setup --config config/issuer.sdl
+private-docs-login gitlab-setup --config config/issuer.sdl
 ----
 
 GitLab has no GitHub App installation.
-The application is group-owned, named Antora Private Docs Login, scope `read_api`.
+The application is group-owned, named Private Docs Login, scope `read_api`.
 The instance URL is the `gitlab.instance.url` value.
 On gitlab.com the group `antora-supplemental` is not there yet.
 After it exists, the settings page is `https://gitlab.com/groups/antora-supplemental/-/settings/applications`.
 Redirect URI is `{issuer}/gitlab/callback`.
 
-Opt-in is an invite of `opt-in-username` (example `antora-private-docs`) to the group.
+Opt-in is an invite of `opt-in-username` (example `private-docs-login`) to the group.
 Guest is enough.
 Groups that have not invited that user are excluded.
 Zero opted-in groups is a refusal page, not a token.

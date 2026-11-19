@@ -1,6 +1,8 @@
 = 2026-11-19
 :hide-page:
 :navtree-parent: changelog.adoc
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
 == Repository home is dev-centr
 
@@ -9,8 +11,6 @@ The Git repository moved from antora-supplemental/private-docs-login to dev-cent
 The how-to on the Antora Supplemental docs hub stays where it is.
 Its links to the repository follow the new home.
 
-The GitHub App name stays Antora Private Docs Login.
-The command name stays `antora-private-docs`.
-The environment names stay on the `ANTORA_PRIVATE_DOCS_` prefix.
-The npm package name stays `@antora-supplemental/private-docs-login`.
-The manifest still checks that package name.
+The GitHub App name, the command, the environment prefix, and the npm package name were still the previous names.
+A later change the same day renamed them.
+See xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name].

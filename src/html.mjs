@@ -40,16 +40,16 @@ export function refusalPage({ forge, installUrl, optInUsername, instanceUrl }) {
   if (forge === "gitlab") {
     const name = optInUsername || "the opt-in user"
     return htmlResponse(403, "This group has not opted in", `
-<p>Antora Private Docs Login could not sign you in. You are not a member of a GitLab group that has opted in.</p>
+<p>Private Docs Login could not sign you in. You are not a member of a GitLab group that has opted in.</p>
 <p>A group owner opts in by inviting the GitLab user <strong>${escapeHtml(name)}</strong> to the group. Guest access is enough. A group you belong to that has not invited that user is not included. A personal email address does not grant access.</p>
 <p>After the invite, sign in again from the documentation site.${instanceUrl ? ` The GitLab host for this login is ${escapeHtml(instanceUrl)}.` : ""}</p>`)
   }
   const link = installUrl
-    ? `<p><a href="${escapeHtml(installUrl)}">Install Antora Private Docs Login</a></p>`
+    ? `<p><a href="${escapeHtml(installUrl)}">Install Private Docs Login</a></p>`
     : ""
   return htmlResponse(403, "This organization has not installed the app", `
-<p>Antora Private Docs Login could not sign you in. Your GitHub user is not a member of an organization that has installed this GitHub App.</p>
-<p>An owner of the organization installs the app named Antora Private Docs Login. After that install, sign in again. A personal email address does not grant access.</p>
+<p>Private Docs Login could not sign you in. Your GitHub user is not a member of an organization that has installed this GitHub App.</p>
+<p>An owner of the organization installs the app named Private Docs Login. After that install, sign in again. A personal email address does not grant access.</p>
 ${link}`)
 }
 
@@ -75,7 +75,7 @@ ${contractLink()}`
 }
 
 export function installSetupPage() {
-  return htmlResponse(200, "Antora Private Docs Login is installed", `
+  return htmlResponse(200, "Private Docs Login is installed", `
 <p>A login provider for OpenID Connect-enabled private sites. It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.</p>
 <p>You installed one published GitHub App. Its only GitHub callback is this issuer. Customer documentation URLs are not entered on the GitHub App.</p>
 <p>Installing this app lets this issuer name members of this organization in tokens for private documentation sites registered with the issuer. It does not add those members to someone else's documentation. Each site still checks for its own organization.</p>

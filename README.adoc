@@ -55,7 +55,7 @@ A login provider for OpenID Connect-enabled private sites.
 It lets GitHub and GitLab organization members sign in to private resources when their org has installed the app.
 It brokers GitHub and GitLab membership for private documentation sites.
 The service is an OpenID Connect issuer a relying party can use.
-GitHub organizations opt in by installing the GitHub App named Antora Private Docs Login.
+GitHub organizations opt in by installing the GitHub App named Private Docs Login.
 GitLab groups opt in by inviting a configured user, because GitLab does not install apps the way GitHub does.
 Cloudflare Access can be a client. It is not the required host.
 
@@ -124,15 +124,15 @@ You do not need your own issuer when you trust the publisher's issuer, and organ
 == Start
 
 Copy `config/issuer.example.sdl` to `config/issuer.sdl`.
-Point `ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH` at a PKCS#8 PEM.
+Point `PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH` at a PKCS#8 PEM.
 The other names are in link:https://docs.devcentr.org/tools/private-docs-login/environment-variables/[Environment variables].
 
-The command name is `antora-private-docs` (package bin, file `bin/antora-private-docs.mjs`).
+The command name is `private-docs-login` (package `@dev-centr/private-docs-login`, file `bin/private-docs-login.mjs`).
 From this checkout, `npm link` puts that command on your PATH.
 
 [source,shell]
 ----
-antora-private-docs serve --config config/issuer.sdl
+private-docs-login serve --config config/issuer.sdl
 ----
 
 This window shows the server.
@@ -143,14 +143,14 @@ Create the GitHub App (the browser approval is the remaining step):
 
 [source,shell]
 ----
-antora-private-docs github-manifest --config config/issuer.sdl
+private-docs-login github-manifest --config config/issuer.sdl
 ----
 
 Print the GitLab application URL and fields:
 
 [source,shell]
 ----
-antora-private-docs gitlab-setup --config config/issuer.sdl
+private-docs-login gitlab-setup --config config/issuer.sdl
 ----
 
 The task write-up is https://docs.devcentr.org/tools/private-docs-login/how-to/[How to run it].

@@ -1,12 +1,14 @@
 = 2026-11-13
 :hide-page:
 :navtree-parent: changelog.adoc
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
 == OpenID Connect issuer for GitHub and GitLab
 
-Antora Private Docs Login issues an ID token after a forge says the person belongs to an opted-in organization or group.
+This login provider issues an ID token after a forge says the person belongs to an opted-in organization or group.
 
-GitHub opt-in is an installation of the GitHub App with that name.
+GitHub opt-in is an installation of the GitHub App.
 The token lists organizations where that app is installed and the person is a member.
 A user account installation is ignored.
 Another app's installation is ignored.

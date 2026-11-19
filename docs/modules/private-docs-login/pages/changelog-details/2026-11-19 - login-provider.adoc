@@ -1,6 +1,8 @@
 = 2026-11-19
 :hide-page:
 :navtree-parent: changelog.adoc
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
 == Login provider for private documentation
 
@@ -19,5 +21,6 @@ A section named What this is for says the mechanism is general OpenID Connect, a
 An Antora site behind Cloudflare Access, or another OpenID Connect relying party, is one example.
 The issuer does not gate an arbitrary web application.
 
-The GitHub App name stays Antora Private Docs Login.
-The command name, the npm package name, and the environment prefix are unchanged.
+The GitHub App name, the command, the npm package, and the environment prefix were still the previous names.
+A later change the same day renamed them.
+See xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name].

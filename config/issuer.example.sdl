@@ -1,4 +1,4 @@
-// Antora Private Docs Login. Copy to config/issuer.sdl (gitignored) and set env names.
+// Private Docs Login. Copy to config/issuer.sdl (gitignored) and set env names.
 // The listen address is where this process binds. issuer is the public URL relying parties use.
 // Neither value assumes a particular host.
 
@@ -11,19 +11,19 @@ listen {
 }
 
 signing-key {
-  pem-path-env "ANTORA_PRIVATE_DOCS_SIGNING_KEY_PATH"
-  kid "antora-private-docs-1"
+  pem-path-env "PRIVATE_DOCS_LOGIN_SIGNING_KEY_PATH"
+  kid "private-docs-login-1"
 }
 
-// GitHub App named Antora Private Docs Login, owned by this organization.
+// GitHub App named Private Docs Login, owned by this organization.
 github {
   web "https://github.com"
   api "https://api.github.com"
   owner "antora-supplemental"
-  slug "antora-private-docs-site"
-  app-id-env "ANTORA_PRIVATE_DOCS_GITHUB_APP_ID"
-  client-id-env "ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_ID"
-  client-secret-env "ANTORA_PRIVATE_DOCS_GITHUB_CLIENT_SECRET"
+  slug "private-docs-login"
+  app-id-env "PRIVATE_DOCS_LOGIN_GITHUB_APP_ID"
+  client-id-env "PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_ID"
+  client-secret-env "PRIVATE_DOCS_LOGIN_GITHUB_CLIENT_SECRET"
 }
 
 // One block per GitLab host. Replace url for a self-managed instance.
@@ -32,21 +32,21 @@ gitlab {
   instance {
     url "https://gitlab.com"
     owner-group "antora-supplemental"
-    opt-in-username "antora-private-docs"
-    client-id-env "ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_ID"
-    client-secret-env "ANTORA_PRIVATE_DOCS_GITLAB_CLIENT_SECRET"
+    opt-in-username "private-docs-login"
+    client-id-env "PRIVATE_DOCS_LOGIN_GITLAB_CLIENT_ID"
+    client-secret-env "PRIVATE_DOCS_LOGIN_GITLAB_CLIENT_SECRET"
   }
 }
 
 // Adding a relying party is another client block. No code change.
 client {
   id "cloudflare-access"
-  secret-env "ANTORA_PRIVATE_DOCS_CLIENT_CLOUDFLARE_ACCESS"
+  secret-env "PRIVATE_DOCS_LOGIN_CLIENT_CLOUDFLARE_ACCESS"
   redirect "https://<team-name>.cloudflareaccess.com/cdn-cgi/access/callback"
 }
 
 client {
   id "generic-rp"
-  secret-env "ANTORA_PRIVATE_DOCS_CLIENT_GENERIC"
+  secret-env "PRIVATE_DOCS_LOGIN_CLIENT_GENERIC"
   redirect "https://rp.example/callback"
 }

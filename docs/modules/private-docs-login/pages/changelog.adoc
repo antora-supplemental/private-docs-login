@@ -20,10 +20,17 @@ endif::[]
 
 == 2026-11-19
 
+=== Private Docs Login is the name
+
+* The command is `private-docs-login` (`bin/private-docs-login.mjs`). The npm package name is `@dev-centr/private-docs-login`. Environment names use the `PRIVATE_DOCS_LOGIN_` prefix. The GitHub App and the GitLab application an owner approves are named Private Docs Login.
+* A process that still has the previous `ANTORA_PRIVATE_DOCS_` prefix set is accepted. The documented names are the new ones.
+* The GitHub App already registered on github.com keeps its previous display name until someone renames it in that app's GitHub settings. This repository does not call GitHub to rename it.
+* Publishing `@dev-centr/private-docs-login` on npm is a later step. The package stays private until then.
+* Detail: xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name].
+
 === Docs home and run command
 
 * The how-to is the Dev-Centr docs page the playbook serves at https://docs.devcentr.org/tools/private-docs-login/how-to/ . This repository is the content source. The page is published on the next hub build.
-* The README and the how-to run `antora-private-docs`, the package bin (`bin/antora-private-docs.mjs`).
 * Sign-in and setup pages link to that how-to.
 * Detail: xref:changelog-details/2026-11-19 - docs-home-and-command.adoc[Docs home and run command].
 
@@ -34,12 +41,12 @@ endif::[]
 
 === Login provider for private documentation
 
-* The README, the how-to, the package description, and the GitHub App manifest description call this a login provider for private documentation sites that use OpenID Connect. Antora is one example. The GitHub App name, the command name, the npm name, and the environment prefix are unchanged.
+* The README, the how-to, the package description, and the GitHub App manifest description call this a login provider for private documentation sites that use OpenID Connect. Antora is one example. The GitHub App name, the command name, the npm name, and the environment prefix were still the previous names. A later entry this day renames them.
 * Detail: xref:changelog-details/2026-11-19 - login-provider.adoc[Login provider for private documentation].
 
 === Repository home is dev-centr
 
-* The Git repository now lives at dev-centr/private-docs-login. The GitHub App name, the command name, and the environment prefix are unchanged.
+* The Git repository now lives at dev-centr/private-docs-login. The GitHub App name, the command name, and the environment prefix were still the previous names. A later entry this day renames them.
 * Detail: xref:changelog-details/2026-11-19 - repository-home.adoc[Repository home is dev-centr].
 
 === Membership broker
@@ -66,19 +73,20 @@ endif::[]
 
 == 2026-11-13
 
-=== Display name is Antora Private Docs Login
+=== Display name was Antora Private Docs Login
 
-* The GitHub App and the GitLab application an owner approves are named Antora Private Docs Login.
-* Detail: xref:changelog-details/2026-11-13 - login-display-name.adoc[Display name is Antora Private Docs Login].
+* The GitHub App and the GitLab application an owner approved were named Antora Private Docs Login. A later entry renames them to Private Docs Login.
+* Detail: xref:changelog-details/2026-11-13 - login-display-name.adoc[Display name was Antora Private Docs Login].
 
 === OpenID Connect issuer for GitHub and GitLab
 
-* Antora Private Docs Login is one issuer. GitHub organizations install one app. GitLab groups opt in by inviting a configured user. The groups claim name and the listen address come from config.
+* This product is one issuer. GitHub organizations install one app. GitLab groups opt in by inviting a configured user. The groups claim name and the listen address come from config.
 * Detail: xref:changelog-details/2026-11-13 - private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab].
 
 == History and reports
 
-* 2026-11-19, xref:changelog-details/2026-11-19 - docs-home-and-command.adoc[Docs home and run command]: the how-to is published from this repository on the Dev-Centr docs site, and the run command is `antora-private-docs`.
+* 2026-11-19, xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name]: the command, the npm package, the environment prefix, and the GitHub App display name.
+* 2026-11-19, xref:changelog-details/2026-11-19 - docs-home-and-command.adoc[Docs home and run command]: the how-to is published from this repository on the Dev-Centr docs site.
 * 2026-11-19, xref:changelog-details/2026-11-19 - support-contact.adoc[Support contact is DevCentr]: the README contact names DevCentr.org instead of Antora Supplemental.
 * 2026-11-19, xref:changelog-details/2026-11-19 - login-provider.adoc[Login provider for private documentation]: the reader-facing description, with Antora as one example.
 * 2026-11-19, xref:changelog-details/2026-11-19 - repository-home.adoc[Repository home is dev-centr]: the Git repository moved from antora-supplemental to dev-centr.
@@ -86,5 +94,5 @@ endif::[]
 * 2026-11-19, xref:changelog-details/2026-11-19 - sign-in-and-setup-screens.adoc[Sign-in and setup screens]: what the setup page and the sign-in page tell an installer and a reader.
 * 2026-11-19, xref:changelog-details/2026-11-19 - how-login-works.adoc[How login works]: the login contract a site operator reads before setup.
 * 2026-11-15, xref:changelog-details/2026-11-15 - collapsible-readme-toc.adoc[Collapsible table of contents]: the README list opens under the title.
-* 2026-11-13, xref:changelog-details/2026-11-13 - login-display-name.adoc[Display name is Antora Private Docs Login]: the name an owner approves on GitHub and GitLab.
+* 2026-11-13, xref:changelog-details/2026-11-13 - login-display-name.adoc[Display name was Antora Private Docs Login]: the name an owner approved on GitHub and GitLab.
 * 2026-11-13, xref:changelog-details/2026-11-13 - private-docs-login.adoc[OpenID Connect issuer for GitHub and GitLab]: what the first version checks before it issues a token.

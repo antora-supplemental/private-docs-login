@@ -1,12 +1,16 @@
 = 2026-11-13
 :hide-page:
 :navtree-parent: changelog.adoc
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
-== Display name is Antora Private Docs Login
+== Display name was Antora Private Docs Login
 
-The GitHub App manifest and the GitLab setup text use the name Antora Private Docs Login.
+The GitHub App manifest and the GitLab setup text used the name Antora Private Docs Login.
 
-That is the name an owner sees on the approval screen.
+That was the name an owner saw on the approval screen.
+A later entry renames it to Private Docs Login.
+See xref:changelog-details/2026-11-19 - private-docs-login-name.adoc[Private Docs Login is the name].
 The repository slug stays `private-docs-login`.
 The groups claim format and the client ids are unchanged.
 Refusal pages and the sign-in chooser use the same name.

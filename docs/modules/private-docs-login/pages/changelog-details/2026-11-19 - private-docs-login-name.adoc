@@ -1,0 +1,38 @@
+= 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-audience: Maintainers and readers tracking functional history of this component
+:page-usage-context: Changelog detail for the product name change
+:page-orig-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+== Private Docs Login is the name
+
+The command is `private-docs-login`.
+The file is `bin/private-docs-login.mjs`.
+The subcommands are `serve`, `github-manifest`, and `gitlab-setup`.
+
+The npm package name is `@dev-centr/private-docs-login`.
+That matches other Dev-Centr packages.
+The package is still marked private.
+Publishing it on npm is a later step.
+The previous package name was not on the npm registry.
+
+Documented environment names use the `PRIVATE_DOCS_LOGIN_` prefix.
+`.env.example` and the environment variable page list those names.
+If a deployment still sets `ANTORA_PRIVATE_DOCS_` with the same suffix, the process uses that value when the new name is unset.
+The documented names are the new ones only.
+
+The GitHub App manifest, the setup pages, and the GitLab setup text use the name Private Docs Login.
+The manifest exchange checks that GitHub returned that name.
+Sign-in matches the GitHub App by id, not by display name.
+
+The GitHub App already registered on github.com keeps its previous display name until someone renames it in that app's settings on GitHub.
+This change does not call the GitHub API to rename it.
+
+The example config sets the signing key id to `private-docs-login-1` and the GitHub App slug to `private-docs-login`.
+A config file that already sets those fields keeps its own values.
+A config that omits them now gets these defaults.
+
+Antora remains one example client.
